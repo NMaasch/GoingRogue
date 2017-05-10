@@ -8,10 +8,11 @@ var loadState = {
 		// Adding a loading label
 		var loadingLabel = game.add.text(80,150,'loading...',{font: '30px Courier', fill: '#ffffff'});
 		
-		// Load Assets for game here.
-		// game.load.image()
-		// game.load.spritesheet()
-		// game.load.atlas()
+		// Images for game
+		game.load.path = '../assets/';
+		game.load.image('map1', 'testmap.png');
+		game.load.spritesheet('player', 'player.png', 80, 115);
+		// Sounds for game
 	},
 	
 	create: function () {
@@ -19,6 +20,6 @@ var loadState = {
 		console.log('Create: loadState');
 		
 		// Call to menuState.
-		game.state.start('menu');
+		game.state.start('play');
 	}
 };
