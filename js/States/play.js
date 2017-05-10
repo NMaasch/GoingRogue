@@ -5,7 +5,7 @@ var playState = {
 		console.log('Create: playState');
 		
 		//  Resize our game world to be a 2000 x 2000 square
-		// game.world.setBounds(0, 0, 1316, 756);
+		game.world.setBounds(0, 0, 1316, 756);
 		
 		
 		// add image background
@@ -13,7 +13,8 @@ var playState = {
 		
 		// add player image
 		player = game.add.sprite(0, 0, 'player');
-		
+		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
+
 		player.anchor.setTo(0.5, 0.5);
 		player.animations.add('walkDown', [0,1,2,3,4,5], 20, true);
 		player.animations.add('walkUp', [6,7,8,9,10,11], 20, true);
