@@ -45,21 +45,21 @@ var playState = {
 		player.body.velocity.x = 0;
 		player.body.velocity.y = 0;
 		
-		if(keyboard.isDown(Phaser.Keyboard.LEFT)){
+		if(keyboard.isDown(Phaser.Keyboard.A)){
 			player.body.velocity.x = -300;
 			//player.animations.play('walkDown');
 		}
-		else if(keyboard.isDown(Phaser.Keyboard.RIGHT)){
+		else if(keyboard.isDown(Phaser.Keyboard.D)){
 			player.body.velocity.x = 300;
 			//player.animations.play('walkDown');
 		}
 		
-		else if(keyboard.isDown(Phaser.Keyboard.UP)){
+		else if(keyboard.isDown(Phaser.Keyboard.W)){
 			player.body.velocity.y = -300;
 			player.animations.play('walkUp');
 			
 		}
-		else if(keyboard.isDown(Phaser.Keyboard.DOWN)){
+		else if(keyboard.isDown(Phaser.Keyboard.S)){
 			player.body.velocity.y = 300;
 			player.animations.play('walkDown');
 		}
