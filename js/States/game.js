@@ -9,4 +9,4 @@ game.state.add('play', playState);
 game.state.add('win', winState);
 
 // Start game by calling boot
-game.state.start('boot');
+game.state.start('load');

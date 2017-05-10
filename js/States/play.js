@@ -5,14 +5,14 @@ var playState = {
 		console.log('Create: playState');
 		
 		//  Resize our game world to be a 2000 x 2000 square
-		game.world.setBounds(0, 0, 1316, 756);
+		// game.world.setBounds(0, 0, 1316, 756);
 		
 		
 		// add image background
-		game.add.image('map1', 0, 0);
+		map = game.add.image('map1', 0, 0);
 		
 		// add player image
-		player = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
+		player = game.add.sprite(0, 0, 'player');
 		
 		player.anchor.setTo(0.5, 0.5);
 		player.animations.add('walkDown', [0,1,2,3,4,5], 20, true);
