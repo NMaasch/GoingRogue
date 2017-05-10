@@ -9,7 +9,7 @@ var playState = {
 		
 		
 		// add image background
-		map = game.add.image('map1', 0, 0);
+		map = game.add.image(0, 0, 'map1');
 		
 		// add player image
 		player = game.add.sprite(0, 0, 'player');
@@ -45,17 +45,26 @@ var playState = {
 		player.body.velocity.y = 0;
 		
 		if(keyboard.isDown(Phaser.Keyboard.LEFT)){
-			player.body.velocity.x = -5;
+			player.body.velocity.x = -300;
+			//player.animations.play('walkDown');
 		}
 		else if(keyboard.isDown(Phaser.Keyboard.RIGHT)){
-			player.body.velocity.x = 5;
+			player.body.velocity.x = 300;
+			//player.animations.play('walkDown');
 		}
 		
 		else if(keyboard.isDown(Phaser.Keyboard.UP)){
-			player.body.velocity.y = -5;
+			player.body.velocity.y = -300;
+			player.animations.play('walkUp');
+			
 		}
 		else if(keyboard.isDown(Phaser.Keyboard.DOWN)){
-			player.body.velocity.y = 5;
+			player.body.velocity.y = 300;
+			player.animations.play('walkDown');
+		}
+		else{
+			player.animations.stop();
+			player.frame = [0];
 		}
 		
 		
