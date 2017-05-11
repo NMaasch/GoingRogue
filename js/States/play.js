@@ -18,8 +18,13 @@ var playState = {
 		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
 
 		player.anchor.setTo(0.5, 0.5);
-		player.animations.add('walkDown', [0,1,2,3,4,5], 20, true);
-		player.animations.add('walkUp', [6,7,8,9,10,11], 20, true);
+        player.animations.add('walkDown',Phaser.Animation.generateFrameNames('player_',1,6,'',2),20,false);
+		player.animations.add('walkUp',Phaser.Animation.generateFrameNames('player_',12,7,'',2),20,false);
+        player.animations.add('walkRight',Phaser.Animation.generateFrameNames('playerSide_',6,1,'',2),20,false);
+        player.animations.add('walkLeft',Phaser.Animation.generateFrameNames('playerSide_',7,12,'',2),20,false);
+        player.animations.play('walkDown');
+        //player.animations.add('walkDown', [0,1,2,3,4,5], 20, true);
+		//player.animations.add('walkUp', [6,7,8,9,10,11], 20, true);
 		
 		// player physics
 		game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -53,11 +58,11 @@ var playState = {
 		
 		if(keyboard.isDown(Phaser.Keyboard.A)){
 			player.body.velocity.x = -250;
-			//player.animations.play('walkDown');
+			player.animations.play('walkLeft');
 		}
 		else if(keyboard.isDown(Phaser.Keyboard.D)){
 			player.body.velocity.x = 250;
-			//player.animations.play('walkDown');
+			player.animations.play('walkRight');
 		}
 		
 		else if(keyboard.isDown(Phaser.Keyboard.W)){
@@ -70,8 +75,8 @@ var playState = {
 			player.animations.play('walkDown');
 		}
 		else{
-			player.animations.stop();
-			player.frame = [0];
+			//player.animations.stop();
+			player.frame = 'player_01';
 		}
 		
 		

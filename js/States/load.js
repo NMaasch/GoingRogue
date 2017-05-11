@@ -11,7 +11,8 @@ var loadState = {
 		// Images for game
 		game.load.path = 'assets/';
 		game.load.image('map1', 'testmap.png');
-		game.load.spritesheet('player', 'player.png', 80, 115);
+		game.load.atlas('player','img/playerAtlas.png','img/player.json');
+        //game.load.spritesheet('player', 'player.png', 80, 115);
 		// Sounds for game
 
 		game.load.path = 'assets/sounds/music/';
