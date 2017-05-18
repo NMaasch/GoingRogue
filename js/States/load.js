@@ -12,10 +12,13 @@ var loadState = {
 		game.load.path = 'assets/';
 		game.load.image('map1', 'testmap.png');
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
-		game.load.image('redbox','img/redbox.png');
-		game.load.image('timerbox','img/trans.png');
-		game.load.image('bar','img/bar.png');
         //game.load.spritesheet('player', 'player.png', 80, 115);
+
+        // hud 
+        game.load.image('timerbox','img/hud/trans.png');
+		game.load.image('bar','img/hud/bar.png');
+
+
 		// Sounds for game
 
 		game.load.path = 'assets/sounds/music/';
@@ -34,7 +37,7 @@ var loadState = {
 	// Checks to see if audio is decoded!
 	update: function() {
 		if (this.cache.isSoundDecoded('music'))	{
-			game.state.start('play');
+			game.state.start('menu');
 		}
 	}
 }

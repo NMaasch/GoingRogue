@@ -1,26 +1,25 @@
 // Instantiate menuState
 var menuState = {
 	
+	preload: function(){
+		game.load.path = 'assets/';
+		this.load.image('startB', 'img/start.png');
+    	this.load.image('instructionsB', 'img/Instructions.png');
+	},
+
 	create: function () {
 		
 		console.log('Create: menuState');
-		
-		// Name of the game being displayed.
-		var nameLabel = game.add.text(80,80,'Final Project',{font: '50px Arial', fill: '#ffffff'});
-		
-		// Instructions to player on starting.
-		var startLabel = game.add.text(80, game.world.height-80, 'press the "W" key to start', {font: '25px Arial', fill: '#ffffff'});
-		
-		// Enable the W key for onPress action.
-		var wkey = game.input.keyboard.addkey(Phaser.Keyboard.W);
-		wkey.onDown.addOnce(this.start, this);
+
+    	startButton = this.add.button(this.world.centerX - 95, 150,'startB', this.startGame, this); 
+    	startInstuction = this.add.button(this.world.centerX - 95, 300,'instructionsB', this.goToInstructions, this);
 	},
 	
-	// Start function to call the play state.
-	start: function () {
-		
-		console.log('Start: menuState');
-		
-		game.state.start('play');
-	}
+	 startGame: function() {
+     	this.state.start('play');
+	},
+
+	 goToInstructions: function() {
+	    this.state.start('instructions');
+	 },
 };
