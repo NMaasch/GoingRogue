@@ -12,7 +12,7 @@ var playState = {
 		map = game.add.tilemap('level');
         map.addTilesetImage('temp','bgTile');
         map.addTilesetImage('roads','roadTile');
-        map.addTilesetImage('buildings','buildingTile)
+        map.addTilesetImage('buildings','buildingTile');
         mapBackground = map.createLayer('Background');
         mapBuildings = map.createLayer('Buildings');
         mapRoads = map.createLayer('Roads');
@@ -22,7 +22,7 @@ var playState = {
 		//map.scale.setTo(2, 2);
         
 		// add player image
-		player = game.add.sprite(1150, 500, 'player');
+		player = game.add.sprite(480, 480, 'player');
 		player.scale.setTo(.4,.4);
 		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
 
