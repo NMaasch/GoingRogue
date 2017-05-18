@@ -54,6 +54,23 @@ var playState = {
         //map = game.add.image(0, 0, 'map1');
 		//map.scale.setTo(2, 2);
         
+        // add pothole image ------> convert to Group!!! 
+        potholes = game.add.group(); 
+     
+        //potholes.create(1000,400,'pothole'); 
+        //createPothole(1000, 300); 
+     
+        pothole = game.add.sprite(1000, 400, 'pothole'); 
+        pothole.scale.setTo(.2,.2); 
+        pothole.anchor.setTo(0.5,0.5); 
+     
+        // pothole physics 
+        game.physics.enable(pothole, Phaser.Physics.ARCADE); 
+     
+        // adjusting hitbox size  
+        pothole.body.setSize(200, 175, 75, 75); 
+        pothole.body.immovable = true; 
+        
 		// add player image
 		player = game.add.sprite(1150, 500, 'player');
 		player.scale.setTo(.4,.4);
@@ -135,7 +152,21 @@ var playState = {
 			//player.animations.stop();
 			player.frame = 'player_01';
 		}
-		
+        
+        if (game.physics.arcade.overlap(player, pothole) == true && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){ 
+            pothole.destroy(); 
+        }   
+       
+       
+        //pothole.events.onInputDown.add(destroySprite, this); 
+     
+     
+        // debug section~!!!!!~ 
+        game.debug.bodyInfo(player, 32, 32); 
+ 
+        game.debug.body(player); 
+        game.debug.body(pothole); 
+	
 	},
 	Win: function() {
 		
@@ -172,6 +203,25 @@ var playState = {
             i = 0;
             timer1Stopped = true;
         }
-    }
+    },
+    function createPothole(x,y){ 
+    potholes.create(x,y, 'pothole'); 
+     
+  //  potholes.scale.setTo(.2,.2); 
+    //potholes.anchor.setTo(0.5,0.5); 
+     
+    // pothole physics 
+  //  game.physics.enable(potholes, Phaser.Physics.ARCADE); 
+     
+    // adjusting hitbox size  
+  //  potholes.body.setSize(200, 175, 75, 75); 
+  //  potholes.body.immovable = true; 
+  }, 
+   
+   
+  function destroySprite(pothole){ 
+     
+  }
+    
     
 }
