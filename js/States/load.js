@@ -33,7 +33,7 @@ var loadState = {
 	// Checks to see if audio is decoded!
 	update: function() {
 		if (this.cache.isSoundDecoded('music'))	{
-			game.state.start('play');
+			game.state.start('menu');
 		}
 	}
 }
