@@ -13,6 +13,12 @@ var loadState = {
 		game.load.image('map1', 'testmap.png');
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
         //game.load.spritesheet('player', 'player.png', 80, 115);
+
+        // hud 
+        game.load.image('timerbox','img/hud/trans.png');
+		game.load.image('bar','img/hud/bar.png');
+
+
 		// Sounds for game
 
 		game.load.path = 'assets/sounds/music/';

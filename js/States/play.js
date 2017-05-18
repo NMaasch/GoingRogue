@@ -1,4 +1,6 @@
 // Instantiate playState
+var time = 60000 * 2 ; // value is ms
+
 var playState = {
 	create: function () {
 		
@@ -38,6 +40,33 @@ var playState = {
 		
 		// Add sprites here:
 
+
+
+
+		// hud  here:
+
+		// TIMER
+		box = game.add.sprite(20, 20, 'timerbox');
+		box.anchor.setTo(.5);
+		box.fixedToCamera = true;
+		box.cameraOffset.setTo(400, 40);
+		box.scale.setTo(1.2,1);
+		timer = game.add.text(20,20, '',
+								{font: '32px Comic Sans MS', fill: '#FFFFFF' });
+		timer.anchor.setTo(.5);
+		timer.fixedToCamera = true;
+		timer.cameraOffset.setTo(400, 35);
+
+		// Admiration Levels
+		bar = game.add.sprite(700, 100, 'bar');
+		bar.anchor.setTo(.5);
+		box.scale.setTo(1.2,1.4);
+		bar.fixedToCamera = true;
+		bar.cameraOffset.setTo(775, 425);
+
+
+
+
 		// Music and SFX here:
 		music = game.add.audio('music',.8 , true);
 		music.play();
@@ -48,6 +77,12 @@ var playState = {
 		
 		
 		console.log('Update: playState');
+
+		// time:
+		timer.text = '' + Math.max( Math.round(time)/1000, 0.0 ).toFixed(1); ;
+		time = time - 20;
+		
+
 		
 		// Add collision:
 		
