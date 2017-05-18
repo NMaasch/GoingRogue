@@ -6,12 +6,18 @@ var playState = {
 		
 		//  Resize our game world to be a 2000 x 2000 square
 		game.world.setBounds(0, 0, 2632,1512);
-		
+		game.physics.startSystem(Phaser.Physics.ARCADE);
 		
 		// add image background
-		map = game.add.image(0, 0, 'map1');
-		map.scale.setTo(2, 2);
-		
+		map = game.add.tilemap('level');
+        map.addTilesetImage('temp','tiles');
+        mapBackground = map.createLayer('Background');
+        mapBuildings = map.createLayer('Buildings');
+        map.setCollisionBetween(1,3000,true,'Buildings');
+        mapBackground.resizeWorld();
+        //map = game.add.image(0, 0, 'map1');
+		//map.scale.setTo(2, 2);
+        
 		// add player image
 		player = game.add.sprite(1150, 500, 'player');
 		player.scale.setTo(.4,.4);
@@ -30,7 +36,6 @@ var playState = {
 		game.physics.enable(player, Phaser.Physics.ARCADE);
 		player.body.collideWorldBounds = true;
 		
-
 			
 		// Add Keyboard movement/actions here:
 		keyboard = game.input.keyboard;
@@ -50,7 +55,7 @@ var playState = {
 		console.log('Update: playState');
 		
 		// Add collision:
-		
+		game.physics.arcade.collide( player, mapBuildings);
 		// Add conditions for movement/actions here:
 		
 		player.body.velocity.x = 0;
@@ -78,7 +83,6 @@ var playState = {
 			//player.animations.stop();
 			player.frame = 'player_01';
 		}
-		
 		
 	},
 	
