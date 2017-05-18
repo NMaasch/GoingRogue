@@ -12,6 +12,10 @@ var loadState = {
 		game.load.path = 'assets/';
 		game.load.image('map1', 'testmap.png');
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
+        game.load.tilemap('level','img/map1.json', null,Phaser.Tilemap.TILED_JSON);
+        game.load.image('bgTile','img/temp.png');
+        game.load.image('roadTile','img/roads.png');
+        game.load.image('buildingTile','img/buildings.jpeg');
         //game.load.spritesheet('player', 'player.png', 80, 115);
 		// Sounds for game
 
@@ -31,7 +35,7 @@ var loadState = {
 	// Checks to see if audio is decoded!
 	update: function() {
 		if (this.cache.isSoundDecoded('music'))	{
-			game.state.start('play');
+			game.state.start('menu');
 		}
 	}
 }
