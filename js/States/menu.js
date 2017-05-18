@@ -11,15 +11,15 @@ var menuState = {
 		
 		console.log('Create: menuState');
 
-    	startButton = this.add.button(this.world.centerX - 95, 150,'startB', this.startPreload, this); 
+    	startButton = this.add.button(this.world.centerX - 95, 150,'startB', this.startGame, this); 
     	startInstuction = this.add.button(this.world.centerX - 95, 300,'instructionsB', this.goToInstructions, this);
 	},
 	
-	 startPreload: function() {
+	 startGame: function() {
      	this.state.start('play');
 	},
 
 	 goToInstructions: function() {
-	    this.state.start('play');
+	    this.state.start('instructions');
 	 },
 };
