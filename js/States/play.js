@@ -1,4 +1,7 @@
 // Instantiate playState
+
+var time = 60000 *3; // value is ms
+
 var playState = {
 	create: function () {
 		
@@ -14,6 +17,7 @@ var playState = {
 		
 		// add player image
 		player = game.add.sprite(1150, 500, 'player');
+
 		player.scale.setTo(.4,.4);
 		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
 
@@ -41,24 +45,59 @@ var playState = {
 		// Music and SFX here:
 		music = game.add.audio('music',.8 , true);
 		music.play();
+
+
+
+		//
+		// hud
+
+		// TIMER
+		box = game.add.sprite(20, 20, 'timerbox');
+		box.anchor.setTo(.5);
+		box.fixedToCamera = true;
+		box.cameraOffset.setTo(400, 40);
+		box.scale.setTo(1.2,1);
+		timer = game.add.text(20,20, 'Time Remaining\n',
+								{font: '32px Comic Sans MS', fill: '#FFFFFF' });
+		timer.anchor.setTo(.5);
+		timer.fixedToCamera = true;
+		timer.cameraOffset.setTo(400, 40);
+
+		// Admiration Levels
+		bar = game.add.sprite(700, 100, 'bar');
+		bar.anchor.setTo(.5);
+		box.scale.setTo(1.2,1.4);
+		bar.fixedToCamera = true;
+		bar.cameraOffset.setTo(775, 425);
+
+
+		// inventory/ resources?
+
 		
 	},
+
+
 	
 	update: function() {
-		
+
+	//box.x = player.x-200;
+	//	box.y = player.y-200;
 		
 		console.log('Update: playState');
 		
 		// Add collision:
+
 		
 		// Add conditions for movement/actions here:
-		
 		player.body.velocity.x = 0;
 		player.body.velocity.y = 0;
+		timer.text = '' + Math.max( Math.round(time)/1000, 0.0 ).toFixed(1); ;
+		time = time - 20;
 		
 		if(keyboard.isDown(Phaser.Keyboard.A)){
 			player.body.velocity.x = -250;
 			player.animations.play('walkLeft');
+
 		}
 		else if(keyboard.isDown(Phaser.Keyboard.D)){
 			player.body.velocity.x = 250;
@@ -81,6 +120,8 @@ var playState = {
 		
 		
 	},
+
+
 	
 	Win: function() {
 		
