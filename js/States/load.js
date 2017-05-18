@@ -11,9 +11,10 @@ var loadState = {
 		// Images for game
 		game.load.path = 'assets/';
 		game.load.image('map1', 'testmap.png');
-		game.load.atlas('player','img/playerAtlas.png','img/player.json');
         game.load.tilemap('level','img/tempmap.json', null,Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles','img/temp.png');
+		game.load.image('pothole', 'img/pothole.png');
+		game.load.atlas('player','img/playerAtlas.png','img/player.json');
         //game.load.spritesheet('player', 'player.png', 80, 115);
 		// Sounds for game
 
