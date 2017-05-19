@@ -22,8 +22,8 @@ var playState = {
         //array correspond to one point (x[1] = 600, y[1] = 600) is 600, 600 
         //on coordinate plane
         points = {
-            'x' : [600, 300, 300, 600, 600],
-            'y' : [600, 600, 300, 300, 600]
+            'x' : [0, game.width],
+            'y' : [600, 600]
         };
         
         //Prelim variable instantiation
@@ -204,7 +204,7 @@ var playState = {
             timer1Stopped = true;
         }
     },
-    function createPothole(x,y){ 
+    createPothole: function(x,y){ 
     potholes.create(x,y, 'pothole'); 
      
   //  potholes.scale.setTo(.2,.2); 
@@ -219,9 +219,9 @@ var playState = {
   }, 
    
    
-  function destroySprite(pothole){ 
+  //function destroySprite(pothole){ 
      
-  }
+  //}
     
     
 }
