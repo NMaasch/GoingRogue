@@ -11,8 +11,17 @@ var playState = {
 		
 		
 		// add image background
-		map = game.add.image(0, 0, 'map1');
-		map.scale.setTo(2, 2);
+        map=game.add.tilemap('level');
+        map=addTilesetImage('temp','bgTile');
+        map=addTilesetImage('roads','roadTile');
+        map.addTilesetImage('buildings','buildingTile');
+        mapBackground = map.createLayer('Background');
+        mapBuildings = map.createLayer('Buildings');
+        mapRoads = map.createLayer('Roads');
+        map.setCollisionBetween(1,3000,true,'Buildings');
+        mapBackground.resizeWorld();
+		//map = game.add.image(0, 0, 'map1');
+		//map.scale.setTo(2, 2);
 		
 		// add player image
 		player = game.add.sprite(1150, 500, 'player');
