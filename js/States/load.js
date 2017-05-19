@@ -12,8 +12,6 @@ var loadState = {
 		game.load.path = 'assets/';
 		game.load.image('map1', 'testmap.png');
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
-        game.load.tilemap('level','img/tempmap.json', null,Phaser.Tilemap.TILED_JSON);
-        game.load.image('tiles','img/temp.png');
         //game.load.spritesheet('player', 'player.png', 80, 115);
         game.load.tilemap('level','img/map1.json',null, Phaser.Tilemap.TILED_JSON);
         game.load.image('bgTile','img/temp.png');
