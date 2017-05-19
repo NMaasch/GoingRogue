@@ -1,4 +1,6 @@
 // Instantiate playState
+var time = 60000 * 2 ; // value is ms
+
 var playState = {
 	create: function () {
 		
@@ -9,15 +11,18 @@ var playState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		
 		// add image background
-		map = game.add.tilemap('level');
-        map.addTilesetImage('temp','tiles');
+        map=game.add.tilemap('level');
+        map=addTilesetImage('temp','bgTile');
+        map=addTilesetImage('roads','roadTile');
+        map.addTilesetImage('buildings','buildingTile');
         mapBackground = map.createLayer('Background');
         mapBuildings = map.createLayer('Buildings');
+        mapRoads = map.createLayer('Roads');
         map.setCollisionBetween(1,3000,true,'Buildings');
         mapBackground.resizeWorld();
-        //map = game.add.image(0, 0, 'map1');
+		//map = game.add.image(0, 0, 'map1');
 		//map.scale.setTo(2, 2);
-        
+		
 		// add player image
 		player = game.add.sprite(1150, 500, 'player');
 		player.scale.setTo(.4,.4);
@@ -43,6 +48,33 @@ var playState = {
 		
 		// Add sprites here:
 
+
+
+
+		// hud  here:
+
+		// TIMER
+		box = game.add.sprite(20, 20, 'timerbox');
+		box.anchor.setTo(.5);
+		box.fixedToCamera = true;
+		box.cameraOffset.setTo(400, 40);
+		box.scale.setTo(1.2,1);
+		timer = game.add.text(20,20, '',
+								{font: '32px Comic Sans MS', fill: '#FFFFFF' });
+		timer.anchor.setTo(.5);
+		timer.fixedToCamera = true;
+		timer.cameraOffset.setTo(400, 35);
+
+		// Admiration Levels
+		bar = game.add.sprite(700, 100, 'bar');
+		bar.anchor.setTo(.5);
+		box.scale.setTo(1.2,1.4);
+		bar.fixedToCamera = true;
+		bar.cameraOffset.setTo(775, 425);
+
+
+
+
 		// Music and SFX here:
 		music = game.add.audio('music',.8 , true);
 		music.play();
@@ -53,6 +85,12 @@ var playState = {
 		
 		
 		console.log('Update: playState');
+
+		// time:
+		timer.text = '' + Math.max( Math.round(time)/1000, 0.0 ).toFixed(1); ;
+		time = time - 20;
+		
+
 		
 		// Add collision:
 		game.physics.arcade.collide( player, mapBuildings);

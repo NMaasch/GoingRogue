@@ -15,6 +15,15 @@ var loadState = {
         game.load.tilemap('level','img/tempmap.json', null,Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles','img/temp.png');
         //game.load.spritesheet('player', 'player.png', 80, 115);
+        game.load.tilemap('level','img/map1.json',null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('bgTile','img/temp.png');
+        game.load.image('roadTile','img/roads.png');
+        game.load.image('buildingTile','img/buildings.jpeg');
+        // hud 
+        game.load.image('timerbox','img/hud/trans.png');
+		game.load.image('bar','img/hud/bar.png');
+
+
 		// Sounds for game
 
 		game.load.path = 'assets/sounds/music/';

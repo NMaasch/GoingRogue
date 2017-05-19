@@ -3,16 +3,15 @@ var menuState = {
 	
 	preload: function(){
 		game.load.path = 'assets/';
-		this.load.image('bng', 'img/bng.png');
 		this.load.image('startB', 'img/start.png');
     	this.load.image('instructionsB', 'img/Instructions.png');
+        this.load.image('bg','img/bng.png');
 	},
 
 	create: function () {
 		
 		console.log('Create: menuState');
-
-		this.add.image(0,0,'bng');
+        this.add.image(0,0,'bg');
     	startButton = this.add.button(this.world.centerX - 95, 150,'startB', this.startGame, this); 
     	startInstuction = this.add.button(this.world.centerX - 95, 300,'instructionsB', this.goToInstructions, this);
 	},
