@@ -15,7 +15,8 @@ var loadState = {
         game.load.image('bgTile','img/temp.png');
         game.load.image('roadTile','img/roads.png');
         game.load.image('buildingTile','img/buildings.jpeg');
-        
+        game.load.image('pothole','img/pothole.png');
+        game.load.image('car','img/car.png');
         // hud 
         game.load.image('timerbox','img/hud/trans.png');
 		game.load.image('bar','img/hud/bar.png');
