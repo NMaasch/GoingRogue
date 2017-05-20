@@ -23,13 +23,13 @@ var playState = {
         //array correspond to one point (x[1] = 600, y[1] = 600) is 600, 600 
         //on coordinate plane
         points = {
-            'x' : [0, game.width],
-            'y' : [600, 600]
+            'x' : [0, 480,480,64,64],
+            'y' : [480, 480,64,64,480]
         };
         
         //Prelim variable instantiation
         //Make increment smaller for faster moving sprite and vice versa
-        increment = 1/500;
+        increment = 1/400;
         i = 0;
         timerStopped = true;
         timer1 = null;
@@ -64,7 +64,7 @@ var playState = {
         //potholes.create(1000,400,'pothole'); 
         //createPothole(1000, 300); 
      
-        pothole = game.add.sprite(1000, 400, 'pothole'); 
+        pothole = game.add.sprite(481, 400, 'pothole'); 
         pothole.scale.setTo(.2,.2); 
         pothole.anchor.setTo(0.5,0.5); 
      
@@ -155,6 +155,7 @@ var playState = {
 		
 		// Add collision:
 		game.physics.arcade.collide( player, mapBuildings);
+        game.physics.arcade.overlap(player,car,this.wasHit,null,this);
 		// Add conditions for movement/actions here:
 		
 		player.body.velocity.x = 0;
@@ -190,10 +191,10 @@ var playState = {
         //pothole.events.onInputDown.add(destroySprite, this); 
         
         // debug section~!!!!!~ 
-        game.debug.bodyInfo(player, 32, 32); 
+        //game.debug.bodyInfo(player, 32, 32); 
  
-        game.debug.body(player); 
-        game.debug.body(pothole); 
+        //game.debug.body(player); 
+        //game.debug.body(pothole); 
         
         
 	},
