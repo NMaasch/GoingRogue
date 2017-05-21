@@ -7,6 +7,7 @@ var points;
 var count=0;
 var px=0;
 var py=0;
+var potCount = 0;
 
 var playState = {
 	create: function () {
@@ -86,8 +87,6 @@ var playState = {
         player.animations.add('walkRight',Phaser.Animation.generateFrameNames('playerSide_',6,1,'',2),20,false);
         player.animations.add('walkLeft',Phaser.Animation.generateFrameNames('playerSide_',7,12,'',2),20,false);
         player.animations.play('walkDown');
-        //player.animations.add('walkDown', [0,1,2,3,4,5], 20, true);
-		//player.animations.add('walkUp', [6,7,8,9,10,11], 20, true);
 		
         //Adding test car
         car = new Car(game, 'car', 900, 500);
@@ -156,8 +155,8 @@ var playState = {
 		// Add collision:
 		game.physics.arcade.collide( player, mapBuildings);
         game.physics.arcade.overlap(player,car,this.wasHit,null,this);
-		// Add conditions for movement/actions here:
 		
+		// Add conditions for movement/actions here:
 		player.body.velocity.x = 0;
 		player.body.velocity.y = 0;
 		
@@ -184,8 +183,17 @@ var playState = {
 			player.frame = 'player_01';
 		}
         
+		
+		// Condition for removing a pothole
+		// Bug: if the player holds down the space bar it is continually updating the potCount.
+		// This is why it is set to 50. It is a bit inconsistant with the spacebar pressing, but works as intended.
+		// Specify in the "Instructions" that the player is to tap on spacebar.
 		if (game.physics.arcade.overlap(player, pothole) == true && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){ 
-            pothole.destroy(); 
+            potCount++;
+			if ( potCount == 50 ){
+				pothole.destroy();
+				potCount == 0;
+			}
         }
         
         //pothole.events.onInputDown.add(destroySprite, this); 
