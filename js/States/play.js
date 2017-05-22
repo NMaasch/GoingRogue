@@ -24,7 +24,7 @@ var playState = {
         //array correspond to one point (x[1] = 600, y[1] = 600) is 600, 600 
         //on coordinate plane
         points = {
-            'x' : [0, 480,480,64,64],
+            'x' : [64, 480,480,64,64],
             'y' : [480, 480,64,64,480]
         };
         
@@ -202,6 +202,7 @@ var playState = {
         //game.debug.bodyInfo(player, 32, 32); 
  
         //game.debug.body(player); 
+        //game.debug.body(car); 
         //game.debug.body(pothole); 
         
         
@@ -237,7 +238,7 @@ var playState = {
             timer1.stop();
             timer1.destroy();
             i = 0;
-            timer1Stopped = true;
+            timerStopped = true;
         }
         count++;
     },
