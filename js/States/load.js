@@ -6,7 +6,7 @@ var loadState = {
 		console.log('Preload: loadState');
 		
 		// Adding a loading label
-		var loadingLabel = game.add.text(80,150,'loading...',{font: '30px Courier', fill: '#ffffff'});
+		var loadingLabel = game.add.text(300,275,'loading...',{font: '30px Courier', fill: '#ffffff'});
 		
 		// Images for game
 		game.load.path = 'assets/';
