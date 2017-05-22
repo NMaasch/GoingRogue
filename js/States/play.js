@@ -185,12 +185,12 @@ var playState = {
         
 		
 		// Condition for removing a pothole
-		// Bug: if the player holds down the space bar it is continually updating the potCount.
+		// (SOLVED)Bug: if the player holds down the space bar it is continually updating the potCount.
 		// This is why it is set to 50. It is a bit inconsistant with the spacebar pressing, but works as intended.
 		// Specify in the "Instructions" that the player is to tap on spacebar.
-		if (game.physics.arcade.overlap(player, pothole) == true && game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){ 
+		if (game.physics.arcade.overlap(player, pothole) == true && game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){ 
             potCount++;
-			if ( potCount == 50 ){
+			if ( potCount == 10 ){
 				pothole.destroy();
 				potCount == 0;
 			}
