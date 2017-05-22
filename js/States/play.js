@@ -59,22 +59,19 @@ var playState = {
 		//map = game.add.image(0, 0, 'map1');
 		//map.scale.setTo(2, 2);
 		
-        // add pothole image ------> convert to Group!!! 
+        // Pothole group creation and physics enabled. 
         potholes = game.add.group(); 
-     
-        //potholes.create(1000,400,'pothole'); 
-        //createPothole(1000, 300); 
-     
-        pothole = game.add.sprite(481, 400, 'pothole'); 
-        pothole.scale.setTo(.2,.2); 
-        pothole.anchor.setTo(0.5,0.5); 
-     
-        // pothole physics 
-        game.physics.enable(pothole, Phaser.Physics.ARCADE); 
+		potholes.enableBody = true;
+
+        createPothole(481, 400);
+		createPothole(481, 300);
+		createPothole(481, 200);
+
      
         // adjusting hitbox size for pothole  
-        pothole.body.setSize(200, 175, 75, 75); 
-        pothole.body.immovable = true; 
+        //pothole.body.setSize(200, 175, 75, 75); 
+        //pothole.body.immovable = true; 
+
         
 		// add player image
 		player = game.add.sprite(500, 500, 'player');
@@ -87,12 +84,14 @@ var playState = {
         player.animations.add('walkRight',Phaser.Animation.generateFrameNames('playerSide_',6,1,'',2),20,false);
         player.animations.add('walkLeft',Phaser.Animation.generateFrameNames('playerSide_',7,12,'',2),20,false);
         player.animations.play('walkDown');
+
 		
         //Adding test car
         car = new Car(game, 'car', 900, 500);
         game.add.existing(car);
         //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
         //tween.onComplete.addOnce(this.tween2, this);
+
         
 		// player physics
 		game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -102,11 +101,6 @@ var playState = {
 		// Add Keyboard movement/actions here:
 		keyboard = game.input.keyboard;
 		
-		
-		// Add sprites here:
-
-
-		// hud  here:
 
 		// TIMER
 		box = game.add.sprite(20, 20, 'timerbox');
@@ -126,8 +120,6 @@ var playState = {
 		box.scale.setTo(1.2,1.4);
 		bar.fixedToCamera = true;
 		bar.cameraOffset.setTo(775, 425);
-
-
 
 
 		// Music and SFX here:
@@ -153,7 +145,7 @@ var playState = {
         }
 		
 		// Add collision:
-		game.physics.arcade.collide( player, mapBuildings);
+		game.physics.arcade.collide(player, mapBuildings);
         game.physics.arcade.overlap(player,car,this.wasHit,null,this);
 		
 		// Add conditions for movement/actions here:
@@ -179,7 +171,6 @@ var playState = {
 			player.animations.play('walkDown');
 		}
 		else{
-			//player.animations.stop();
 			player.frame = 'player_01';
 		}
         
@@ -188,24 +179,18 @@ var playState = {
 		// (SOLVED)Bug: if the player holds down the space bar it is continually updating the potCount.
 		// This is why it is set to 50. It is a bit inconsistant with the spacebar pressing, but works as intended.
 		// Specify in the "Instructions" that the player is to tap on spacebar.
-		if (game.physics.arcade.overlap(player, pothole) == true && game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){ 
-            potCount++;
-			if ( potCount == 10 ){
-				pothole.destroy();
-				potCount == 0;
-			}
-        }
+		game.physics.arcade.overlap(player, potholes, killPothole); 
+             
         
-        //pothole.events.onInputDown.add(destroySprite, this); 
-        
+/*
         // debug section~!!!!!~ 
-        //game.debug.bodyInfo(player, 32, 32); 
+        game.debug.bodyInfo(player, 32, 32); 
  
-        //game.debug.body(player); 
-        //game.debug.body(pothole); 
-        
-        
+        game.debug.body(player); 
+        game.debug.body(potholes); 
+*/      
 	},
+	
 	
 	Win: function() {
 		
@@ -214,9 +199,13 @@ var playState = {
 		// Function call to winState.
 		game.state.start('win');
 	},
+	
+	
     wasHit: function(){
         console.log('wasHit');
     },
+	
+	
     plot: function(){
         var posx = this.math.linearInterpolation(points.x, i);
         var posy = this.math.linearInterpolation(points.y, i);
@@ -238,24 +227,21 @@ var playState = {
             i = 0;
             timer1Stopped = true;
         }
-    },
-    createPothole: function(x,y){ 
-    potholes.create(x,y, 'pothole'); 
-     
-    //potholes.scale.setTo(.2,.2); 
-    //potholes.anchor.setTo(0.5,0.5); 
-     
-    //pothole physics 
-    //game.physics.enable(potholes, Phaser.Physics.ARCADE); 
-     
-    //adjusting hitbox size  
-    //potholes.body.setSize(200, 175, 75, 75); 
-    //potholes.body.immovable = true; 
-  }, 
-   
-   
-  //function destroySprite(pothole){ 
-     
-  //}
-    
+    }
+}
+
+function createPothole(x,y){ 
+	var pothole = potholes.create(x,y, 'pothole'); 
+    var potholeCount = 0;
+    pothole.scale.setTo(.2,.2); 
+}
+
+function killPothole(player, pothole){
+	if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){ 
+            potCount++;
+			if ( potCount == 10 ){
+				potholes.remove(pothole);
+				potCount = 0;
+			}
+        }
 }
