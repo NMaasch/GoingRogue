@@ -4,9 +4,9 @@ var car;
 var tween;
 var bmd;
 var points;
-var count=0;
-var px=0;
-var py=0;
+var count = 1;
+var px = [0];
+var py = [0];
 var potCount = 0;
 
 var playState = {
@@ -223,21 +223,23 @@ var playState = {
         car.x = posx;
         car.y = posy;
         i += increment;
-        /*angle = this.math.angleBetween(px, py, posx, posy);
-        car.rotation = angle;
         
-        var px = {'x': posx};
-        var py = {'y': posy};
-        console.log(px);*/
+        px.push(posx);
+        py.push(posy);
+        //console.log(px);
+        
+        angle = this.math.angleBetween(px[count-1], py[count-1], posx, posy);
+        car.rotation = angle;
         //posy in this case will terminate the sprite when it reaches a certain
         //y-position. Can be changed to terminate upon reaching certain 
         //x-pos
-        if(posy > 1180) {
+        if(posy > 480) {
             timer1.stop();
             timer1.destroy();
             i = 0;
             timer1Stopped = true;
         }
+        count++;
     },
     createPothole: function(x,y){ 
     potholes.create(x,y, 'pothole'); 
