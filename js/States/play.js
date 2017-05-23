@@ -1,5 +1,4 @@
 // Instantiate playState
-var time = 60000 * 2 ; // value is ms
 var car;
 var tween;
 var bmd;
@@ -9,8 +8,15 @@ var px = [0];
 var py = [0];
 var potCount = 0;
 
+
 var playState = {
 	create: function () {
+		this.dead = false;
+		this.spotted = false;
+		this.ammo = 0;
+
+		//TIME FOR LEVEL
+		this.time = 60000 / 2; 
 		
 		console.log('Create: playState');
 		
@@ -105,45 +111,105 @@ var playState = {
 		
 		// Add sprites here:
 
+		// CEMENT FILLER TEST
+		fill = game.add.sprite(700, 500,'fill');
+		game.physics.enable(fill, Phaser.Physics.ARCADE);
+		fill.body.immovable = true;
+
 
 		// hud  here:
-
-		// TIMER
-		box = game.add.sprite(20, 20, 'timerbox');
-		box.anchor.setTo(.5);
-		box.fixedToCamera = true;
-		box.cameraOffset.setTo(400, 40);
-		box.scale.setTo(1.2,1);
-		timer = game.add.text(20,20, '',
-								{font: '32px Comic Sans MS', fill: '#FFFFFF' });
-		timer.anchor.setTo(.5);
-		timer.fixedToCamera = true;
-		timer.cameraOffset.setTo(400, 35);
 
 		// Admiration Levels
 		bar = game.add.sprite(700, 100, 'bar');
 		bar.anchor.setTo(.5);
-		box.scale.setTo(1.2,1.4);
 		bar.fixedToCamera = true;
 		bar.cameraOffset.setTo(775, 425);
+
+		// Filler Inventory
+		inv = game.add.sprite(0, 20, 'inventory');
+		inv.animations.add('empty', [0], false);
+		//inv.animations.add('1', [1], false);
+		//inv.animations.add('2', [2], false);
+		//inv.scale.setTo(.8,.8)
+		//inv.anchor.setTo(.5);
+		inv.fixedToCamera = true;
+		inv.cameraOffset.setTo(10, 500);
+		inv.animations.play('empty');
 
 
 
 
 		// Music and SFX here:
-		music = game.add.audio('music',.8 , true);
-		music.play();
-		
+		music_caution = game.add.audio('caution-theme',.8 , true);
+		music_alert = game.add.audio('alert-theme', .8, true);
+		sfx_alert = game.add.audio('alert', .9, false);
+		music_caution.play();
 	},
+
+
+
+
+	gameOver: function(){
+		player.kill();
+		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER\nPress "r" to return to menu ',
+										{font: '30px Comic Sans MS', fill: '#FFFFFF'});
+		this.gameover.fixedToCamera = true;
+		this.gameover.anchor.setTo(.5);
+		this.gameover.cameraOffset.setTo(400, 300);
+		this.dead = true;
+	},
+
+	collectFill: function(){
+		box = game.add.sprite(20, 20, 'timerbox');
+		box.scale.setTo(1.2,1.4);
+		box.anchor.setTo(.5);
+		box.fixedToCamera = true;
+		box.cameraOffset.setTo(400, 40);
+		box.scale.setTo(1.2,1);
+		timer = game.add.text(20,20, '',
+				{font: '32px Comic Sans MS', fill: '#FFFFFF' });
+		timer.anchor.setTo(.5);
+		timer.fixedToCamera = true;
+		timer.cameraOffset.setTo(400, 35);
+		sfx_alert.play();
+		music_caution.stop();
+		music_alert.play();
+		this.spotted = true;
+		if(this.ammo<=2) { 
+			this.ammo++;
+			inv.frame = this.ammo;
+			fill.kill();
+		}
+
+	},
+
+
+
+
+
+
 	
 	update: function() {
+
 		
 		
-		console.log('Update: playState');
+		//console.log('Update: playState');
+		if(this.time == 0){
+			this.gameOver();
+		}
 
 		// time:
-		timer.text = '' + Math.max( Math.round(time)/1000, 0.0 ).toFixed(1); ;
-		time = time - 20;
+//		timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1);
+//		this.time = this.time - 20;
+
+		// once player picks up the fill timer starts ticking down;
+
+		if(this.spotted == true){
+			timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1); 
+			this.time = this.time - 20;
+
+		}
+
 		
         if(timerStopped){
             timerStopped = false;
@@ -153,8 +219,11 @@ var playState = {
         }
 		
 		// Add collision:
+		game.physics.arcade.overlap(player, fill, this.collectFill, null, this);
+
 		game.physics.arcade.collide( player, mapBuildings);
         game.physics.arcade.overlap(player,car,this.wasHit,null,this);
+
 		
 		// Add conditions for movement/actions here:
 		player.body.velocity.x = 0;
@@ -204,7 +273,19 @@ var playState = {
         //game.debug.body(player); 
         //game.debug.body(car); 
         //game.debug.body(pothole); 
-        
+
+
+        if(this.dead==true){
+        	if(keyboard.isDown(Phaser.Keyboard.R)){
+        		music_caution.stop();
+        		music_alert.stop();
+
+        		game.state.start('menu');
+
+			}
+
+        }
+     
         
 	},
 	
