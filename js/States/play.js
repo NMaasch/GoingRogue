@@ -7,13 +7,15 @@ var count = 1;
 var px = [0];
 var py = [0];
 var potCount = 0;
-
+var ammo;
+var firstCollect;
 
 var playState = {
 	create: function () {
 		this.dead = false;
 		this.spotted = false;
-		this.ammo = 0;
+        ammo = 0;
+        firstCollect = false;
 
 		//TIME FOR LEVEL
 		this.time = 60000 / 2; 
@@ -111,12 +113,17 @@ var playState = {
 		
 		// Add sprites here:
 
-		// CEMENT FILLER TEST
-		fill = game.add.sprite(700, 500,'fill');
+		//Cement filler group
+        filler = game.add.group();
+        
+		fill = filler.create(700, 500,'fill');
 		game.physics.enable(fill, Phaser.Physics.ARCADE);
 		fill.body.immovable = true;
-
-
+        
+        fill = filler.create(900, 500,'fill');
+		game.physics.enable(fill, Phaser.Physics.ARCADE);
+		fill.body.immovable = true;
+        
 		// hud  here:
 
 		// Admiration Levels
@@ -136,19 +143,12 @@ var playState = {
 		inv.cameraOffset.setTo(10, 500);
 		inv.animations.play('empty');
 
-
-
-
 		// Music and SFX here:
 		music_caution = game.add.audio('caution-theme',.8 , true);
 		music_alert = game.add.audio('alert-theme', .8, true);
 		sfx_alert = game.add.audio('alert', .9, false);
 		music_caution.play();
 	},
-
-
-
-
 	gameOver: function(){
 		player.kill();
 		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER\nPress "r" to return to menu ',
@@ -159,45 +159,39 @@ var playState = {
 		this.dead = true;
 	},
 
-	collectFill: function(){
-		box = game.add.sprite(20, 20, 'timerbox');
-		box.scale.setTo(1.2,1.4);
-		box.anchor.setTo(.5);
-		box.fixedToCamera = true;
-		box.cameraOffset.setTo(400, 40);
-		box.scale.setTo(1.2,1);
-		timer = game.add.text(20,20, '',
-				{font: '32px Helvitica', fill: '#FFFFFF' });
-		timer.anchor.setTo(.5);
-		timer.fixedToCamera = true;
-		timer.cameraOffset.setTo(400, 35);
+	collectFill: function(player, fill){
+        if(firstCollect == false){
+		  box = game.add.sprite(20, 20, 'timerbox');
+		  box.scale.setTo(1.2,1.4);
+		  box.anchor.setTo(.5);
+		  box.fixedToCamera = true;
+		  box.cameraOffset.setTo(400, 40);
+		  box.scale.setTo(1.2,1);
+		  timer = game.add.text(20,20, '',
+				{font: '32px Comic Sans MS', fill: '#FFFFFF' });
+		  timer.anchor.setTo(.5);
+		  timer.fixedToCamera = true;
+		  timer.cameraOffset.setTo(400, 35);
+          firstCollect = true;
+        }
 		sfx_alert.play();
 		music_caution.stop();
 		music_alert.play();
 		this.spotted = true;
-		if(this.ammo<=2) { 
-			this.ammo++;
-			inv.frame = this.ammo;
+		if(ammo<=2) { 
+			ammo++;
+			inv.frame = ammo;
 			fill.kill();
 		}
-
 	},
-
-
-
-
-
-
-	
-	update: function() {
-
-		
-		
+	update: function() {		
 		//console.log('Update: playState');
+        
+        inv.frame = ammo;
+        
 		if(this.time == 0){
 			this.gameOver();
 		}
-
 		// time:
 //		timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1);
 //		this.time = this.time - 20;
@@ -207,10 +201,7 @@ var playState = {
 		if(this.spotted == true){
 			timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1); 
 			this.time = this.time - 20;
-
-		}
-
-		
+		}	
         if(timerStopped){
             timerStopped = false;
             timer1 = game.time.create(true);
@@ -219,7 +210,7 @@ var playState = {
         }
 		
 		// Add collision:
-		game.physics.arcade.overlap(player, fill, this.collectFill, null, this);
+		game.physics.arcade.overlap(player, filler, this.collectFill, null, this);
 
 		game.physics.arcade.collide( player, mapBuildings);
         game.physics.arcade.overlap(player,car,this.wasHit,null,this);
@@ -255,13 +246,14 @@ var playState = {
 		
 		// Condition for removing a pothole
 		// (SOLVED)Bug: if the player holds down the space bar it is continually updating the potCount.
-		// This is why it is set to 50. It is a bit inconsistant with the spacebar pressing, but works as intended.
+		// This is why it is set to 50. It is a bit inconsistent with the spacebar pressing, but works as intended.
 		// Specify in the "Instructions" that the player is to tap on spacebar.
 		if (game.physics.arcade.overlap(player, pothole) == true && game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){ 
             potCount++;
 			if ( potCount == 10 ){
 				pothole.destroy();
 				potCount == 0;
+                ammo--;
 			}
         }
         
@@ -282,10 +274,7 @@ var playState = {
         		game.state.start('menu');
 
 			}
-
         }
-     
-        
 	},
 	
 	Win: function() {
@@ -296,7 +285,8 @@ var playState = {
 		game.state.start('win');
 	},
     wasHit: function(){
-        console.log('wasHit');
+        this.gameOver();
+        //console.log('wasHit');
     },
     plot: function(){
         var posx = this.math.linearInterpolation(points.x, i);
