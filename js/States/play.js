@@ -62,7 +62,8 @@ var playState = {
         // Pothole group creation and physics enabled. 
         potholes = game.add.group(); 
 		potholes.enableBody = true;
-
+		potholes.potCount = 0;
+		
         createPothole(481, 400);
 		createPothole(481, 300);
 		createPothole(481, 200);
@@ -238,10 +239,10 @@ function createPothole(x,y){
 
 function killPothole(player, pothole){
 	if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){ 
-            potCount++;
-			if ( potCount == 10 ){
+            potholes.potCount++;
+			if ( potholes.potCount == 10 ){
 				potholes.remove(pothole);
-				potCount = 0;
+				potholes.potCount = 0;
 			}
         }
 }
