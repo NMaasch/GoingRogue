@@ -7,7 +7,7 @@ var points;
 var count=0;
 var px=0;
 var py=0;
-var potCount = 0;
+//var potCount = 0;
 
 var playState = {
 	create: function () {
@@ -87,6 +87,7 @@ var playState = {
         //Adding test car
         car = new Car(game, 'car', 900, 500);
         game.add.existing(car);
+		car.body.setSize(125,55,10,35);
         //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
         //tween.onComplete.addOnce(this.tween2, this);
 
@@ -180,13 +181,13 @@ var playState = {
 		game.physics.arcade.overlap(player, potholes, killPothole); 
              
         
-/*
+
         // debug section~!!!!!~ 
         game.debug.bodyInfo(player, 32, 32); 
  
         game.debug.body(player); 
-        game.debug.body(potholes); 
-*/      
+        game.debug.body(car); 
+      
 	},
 	
 	
