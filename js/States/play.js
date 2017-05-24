@@ -60,18 +60,15 @@ var playState = {
 		//map.scale.setTo(2, 2);
 		
         // Pothole group creation and physics enabled. 
-        potholes = game.add.group(); 
-		potholes.enableBody = true;
-		potholes.potCount = 0;
+        potholes = game.add.group(); // attach potholes to a group.
+		potholes.enableBody = true;	// enables physics to pothole object.
+		potholes.potCount = 0;	// Create a variable per pothole object.
 		
-        createPothole(481, 400);
+        
+		// Pothole creation on level.
+		createPothole(481, 400);
 		createPothole(481, 300);
 		createPothole(481, 200);
-
-     
-        // adjusting hitbox size for pothole  
-        //pothole.body.setSize(200, 175, 75, 75); 
-        //pothole.body.immovable = true; 
 
         
 		// add player image
