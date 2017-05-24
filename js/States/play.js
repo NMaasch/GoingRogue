@@ -152,7 +152,7 @@ var playState = {
 	gameOver: function(){
 		player.kill();
 		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER\nPress "r" to return to menu ',
-										{font: '30px Comic Sans MS', fill: '#FFFFFF'});
+										{font: '30px Helvitica', fill: '#FFFFFF'});
 		this.gameover.fixedToCamera = true;
 		this.gameover.anchor.setTo(.5);
 		this.gameover.cameraOffset.setTo(400, 300);
@@ -167,7 +167,7 @@ var playState = {
 		box.cameraOffset.setTo(400, 40);
 		box.scale.setTo(1.2,1);
 		timer = game.add.text(20,20, '',
-				{font: '32px Comic Sans MS', fill: '#FFFFFF' });
+				{font: '32px Helvitica', fill: '#FFFFFF' });
 		timer.anchor.setTo(.5);
 		timer.fixedToCamera = true;
 		timer.cameraOffset.setTo(400, 35);
@@ -279,7 +279,6 @@ var playState = {
         	if(keyboard.isDown(Phaser.Keyboard.R)){
         		music_caution.stop();
         		music_alert.stop();
-
         		game.state.start('menu');
 
 			}
