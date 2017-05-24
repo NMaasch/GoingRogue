@@ -11,9 +11,11 @@ var menuState = {
 	create: function () {
 		
 		console.log('Create: menuState');
+        game.world.setBounds(0,0,800,600);
         this.add.image(0,0,'bg');
-    	startButton = this.add.button(this.world.centerX - 95, 150,'startB', this.startGame, this); 
-    	startInstuction = this.add.button(this.world.centerX - 95, 300,'instructionsB', this.goToInstructions, this);
+    	startButton = this.add.button(this.world.centerX - 65, 150,'startB', this.startGame, this);
+        game.camera.setPosition(0,0);
+    	startInstuction = this.add.button(this.world.centerX - 65, 300,'instructionsB', this.goToInstructions, this);
 	},
 	
 	 startGame: function() {
