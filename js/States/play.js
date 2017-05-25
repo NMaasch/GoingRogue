@@ -96,17 +96,17 @@ var playState = {
         player.animations.add('walkLeft',Phaser.Animation.generateFrameNames('playerSide_',7,12,'',2),20,false);
         player.animations.play('walkDown');
 		
+        // player physics
+		game.physics.enable(player, Phaser.Physics.ARCADE);
+		player.body.collideWorldBounds = true;
+        
         //Adding test car
         car = new Car(game, 'car', 900, 500);
+        car.body.setSize(70,70,27,25);
         game.add.existing(car);
         //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
         //tween.onComplete.addOnce(this.tween2, this);
-        
-		// player physics
-		game.physics.enable(player, Phaser.Physics.ARCADE);
-		player.body.collideWorldBounds = true;
-		
-			
+        	
 		// Add Keyboard movement/actions here:
 		keyboard = game.input.keyboard;
 		
@@ -173,10 +173,13 @@ var playState = {
 		  timer.fixedToCamera = true;
 		  timer.cameraOffset.setTo(400, 35);
           firstCollect = true;
+          sfx_alert.play();
+		  music_caution.stop();
+		  music_alert.play();
         }
-		sfx_alert.play();
-		music_caution.stop();
-		music_alert.play();
+		//sfx_alert.play();
+		//music_caution.stop();
+		//music_alert.play();
 		this.spotted = true;
 		if(ammo<=2) { 
 			ammo++;
@@ -258,25 +261,21 @@ var playState = {
         }
         
         //pothole.events.onInputDown.add(destroySprite, this); 
-        
-        // debug section~!!!!!~ 
-        //game.debug.bodyInfo(player, 32, 32); 
- 
-        //game.debug.body(player); 
-        //game.debug.body(car); 
-        //game.debug.body(pothole); 
-
 
         if(this.dead==true){
         	if(keyboard.isDown(Phaser.Keyboard.R)){
         		music_caution.stop();
         		music_alert.stop();
         		game.state.start('menu');
-
 			}
         }
 	},
-	
+	render: function(){//used to debug~!!!!!~ 
+        //game.debug.bodyInfo(player,32,32);
+        //game.debug.body(player);
+        //game.debug.body(pothole);
+        game.debug.body(car);
+    },
 	Win: function() {
 		
 		console.log('Win: playState');
