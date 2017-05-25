@@ -13,10 +13,16 @@ var menuState = {
 		console.log('Create: menuState');
         game.world.setBounds(0,0,800,600);
         this.add.image(0,0,'bg');
+        keyboard=game.input.keyboard;
     	startButton = this.add.button(this.world.centerX - 65, 150,'startB', this.startGame, this);
         game.camera.setPosition(0,0);
     	startInstuction = this.add.button(this.world.centerX - 65, 300,'instructionsB', this.goToInstructions, this);
 	},
+    update: function(){
+        if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+            this.state.start('play');
+        }
+    },
 	
 	 startGame: function() {
      	this.state.start('play');

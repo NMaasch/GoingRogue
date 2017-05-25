@@ -54,7 +54,7 @@ var playState = {
             bmd.rect(posx, posy, 3, 3, 'rgba(245, 0, 0, 1)');
         }*/
         
-		// add image background
+		// add image background and buildings
         map=game.add.tilemap('level');
         map.addTilesetImage('temp','bgTile');
         map.addTilesetImage('roads','roadTile');
