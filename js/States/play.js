@@ -188,11 +188,11 @@ var playState = {
         
 
         // debug section~!!!!!~ 
-        game.debug.bodyInfo(player, 32, 32); 
+       /* game.debug.bodyInfo(player, 32, 32); 
  
         game.debug.body(player); 
         game.debug.body(car); 
-      
+      */
 	},
 	
 	
