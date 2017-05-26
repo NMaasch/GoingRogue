@@ -178,9 +178,6 @@ var playState = {
 		// (SOLVED)Bug: if the player holds down the space bar it is continually updating the potCount.
 		// This is why it is set to 50. It is a bit inconsistant with the spacebar pressing, but works as intended.
 		// Specify in the "Instructions" that the player is to tap on spacebar.
-		if(game.physics.arcade.overlap(player, potholes) ==  false){
-		potholes.potCount = 0;
-	}
 		playerHole = game.physics.arcade.overlap(player, potholes);
 		
 		if(playerHole == true){ 
