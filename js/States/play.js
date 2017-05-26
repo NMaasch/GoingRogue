@@ -6,7 +6,7 @@ var points;
 var count = 1;
 var px = [0];
 var py = [0];
-var potCount = 0;
+var potCount;
 var ammo;
 var firstCollect;
 
@@ -16,7 +16,7 @@ var playState = {
 		this.spotted = false;
         ammo = 0;
         firstCollect = false;
-
+        potCount=0;
 		//TIME FOR LEVEL
 		this.time = 60000 / 2; 
 		
@@ -88,8 +88,8 @@ var playState = {
 		player = game.add.sprite(500, 500, 'player');
 		player.scale.setTo(.4,.4);
 		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
-
 		player.anchor.setTo(0.5, 0.5);
+        
         player.animations.add('walkDown',Phaser.Animation.generateFrameNames('player_',1,6,'',2),20,false);
 		player.animations.add('walkUp',Phaser.Animation.generateFrameNames('player_',12,7,'',2),20,false);
         player.animations.add('walkRight',Phaser.Animation.generateFrameNames('playerSide_',6,1,'',2),20,false);
@@ -98,6 +98,7 @@ var playState = {
 		
         // player physics
 		game.physics.enable(player, Phaser.Physics.ARCADE);
+        player.body.setSize(50,50,8,0);
 		player.body.collideWorldBounds = true;
         
         //Adding test car
@@ -272,7 +273,7 @@ var playState = {
 	},
 	render: function(){//used to debug~!!!!!~ 
         //game.debug.bodyInfo(player,32,32);
-        //game.debug.body(player);
+        game.debug.body(player);
         //game.debug.body(pothole);
         game.debug.body(car);
     },
