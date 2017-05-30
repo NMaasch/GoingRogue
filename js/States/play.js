@@ -55,13 +55,16 @@ var playState = {
         }*/
         
 		// add image background and buildings
-        map=game.add.tilemap('level');
-        map.addTilesetImage('temp','bgTile');
-        map.addTilesetImage('roads','roadTile');
-        map.addTilesetImage('buildings','buildingTile');
+        map=game.add.tilemap('level1');
+        map.addTilesetImage('Tilesheet','Tilesheet');
+        //map.addTilesetImage('temp','bgTile');
+        //map.addTilesetImage('roads','roadTile');
+        //map.addTilesetImage('buildings','buildingTile');
         mapBackground = map.createLayer('Background');
-        mapBuildings = map.createLayer('Buildings');
         mapRoads = map.createLayer('Roads');
+        mapBuildings = map.createLayer('Buildings');
+        
+        
         map.setCollisionBetween(1,3000,true,'Buildings');
         mapBackground.resizeWorld();
 		//map = game.add.image(0, 0, 'map1');
@@ -73,7 +76,7 @@ var playState = {
         //potholes.create(1000,400,'pothole'); 
         //createPothole(1000, 300); 
      
-        pothole = game.add.sprite(481, 400, 'pothole'); 
+        pothole = game.add.sprite(675, 400, 'pothole'); 
         pothole.scale.setTo(.2,.2); 
         pothole.anchor.setTo(0.5,0.5); 
      
@@ -117,14 +120,17 @@ var playState = {
 		//Cement filler group
         filler = game.add.group();
         
-		fill = filler.create(700, 500,'fill');
+		fill = filler.create(825, 725,'fill');
 		game.physics.enable(fill, Phaser.Physics.ARCADE);
 		fill.body.immovable = true;
+        fill.anchor.setTo(0.5);
+        fill.scale.setTo(0.2);
         
-        fill = filler.create(900, 500,'fill');
+        fill = filler.create(925, 775,'fill');
 		game.physics.enable(fill, Phaser.Physics.ARCADE);
 		fill.body.immovable = true;
-        
+        fill.anchor.setTo(0.5);
+        fill.scale.setTo(0.2);
 		// hud  here:
 
 		// Admiration Levels
