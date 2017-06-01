@@ -6,15 +6,13 @@ var loadState = {
 		console.log('Preload: loadState');
 		
 		// Adding a loading label
-		var loadingLabel = game.add.text(300,275,'loading...',{font: '30px Courier', fill: '#ffffff'});
-		
+        game.load.image('logo','assets/img/Logo.png');
+        //var logo = game.add.image(0,0,'logo');
+		var loadingLabel = game.add.text(325,400,'loading...',{font: '30px Courier', fill: '#ffffff'});
+		//var logo = game.add.image(0,0,'logo');
 		// Images for game
 		game.load.path = 'assets/';
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
-        //game.load.tilemap('level','img/map1.json', null, Phaser.Tilemap.TILED_JSON);
-        //game.load.image('bgTile','img/temp.png');
-        //game.load.image('roadTile','img/roads.png');
-        //game.load.image('buildingTile','img/buildings.jpeg');
         game.load.tilemap('level1','img/level1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Tilesheet','img/Tilesheet.png');
         game.load.image('pothole','img/pothole.png');
@@ -44,7 +42,8 @@ var loadState = {
 	create: function () {
 		
 		console.log('Create: loadState');
-		
+		var logo = game.add.image(400,250,'logo');
+        logo.anchor.setTo(0.5);
 		// Call to menuState.
 		//game.state.start('play');
 	},

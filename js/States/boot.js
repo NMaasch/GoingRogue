@@ -1,7 +1,11 @@
 // Instantiate bootState.
 var bootState = {
 	// Create function - instantiating physics system.
-	create: function () {
+	preload: function(){
+        game.load.image('logo','assets/img/Logo.jpg');
+    },
+    
+    create: function () {
 		
 		console.log('Create: bootState');
 		
