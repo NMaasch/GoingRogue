@@ -31,7 +31,7 @@ var menuState = {
 	// can start game by pressing spacebar 
     update: function(){
         if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-            this.state.start('play');
+            this.state.start("intro");
         }
     },
 	
