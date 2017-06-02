@@ -268,7 +268,7 @@ var playState = {
 		this.winning.cameraOffset.setTo(400, 300);
 		
 		// Function call to winState.
-		game.state.start('win');
+		//game.state.start('win');
 	},
     wasHit: function(){
         this.gameOver();
