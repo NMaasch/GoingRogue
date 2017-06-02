@@ -262,6 +262,11 @@ var playState = {
 		
 		console.log('Win: playState');
 		
+		this.winning = game.add.text(400 , game.world.height/2, 'LEVEL COMPLETE!\nPress "r" to return to menu ',{font: '30px Helvitica', fill: '#FFFFFF'});
+		this.winning.fixedToCamera = true;
+		this.winning.anchor.setTo(.5);
+		this.winning.cameraOffset.setTo(400, 300);
+		
 		// Function call to winState.
 		game.state.start('win');
 	},
