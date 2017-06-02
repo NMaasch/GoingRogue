@@ -239,7 +239,7 @@ var playState = {
 		// Condition for removing a pothole
 		// Specify in the "Instructions" that the player is to tap on spacebar.
 		playerHole = game.physics.arcade.overlap(player,potholes);
-        if(playerHole == true){
+        if(playerHole == true && ammo > 0){
             game.physics.arcade.overlap(player,potholes,this.killPothole);
         }
         else{potholes.potCount = 0;}
@@ -306,6 +306,7 @@ var playState = {
             if(potholes.potCount== 10){
                 potholes.remove(pothole);
                 potholes.potCount = 0;
+				ammo--;
             }
         }
     } 
