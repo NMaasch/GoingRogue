@@ -6,6 +6,7 @@ game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
 game.state.add('instructions', instructionsState);
+game.state.add('instructionsPg2', instructionsPg2State);
 game.state.add('intro',introState);
 game.state.add('play', playState);
 game.state.add('win', winState);

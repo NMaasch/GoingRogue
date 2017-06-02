@@ -5,7 +5,7 @@ var instructionsState = {
 		game.load.path = 'assets/';
 		this.load.image('bng', 'img/instructionsArt.png');
     	this.load.image('back', 'img/Back.png');
-    	this.load.image('start', 'img/StartArrow.png');    	
+    	this.load.image('next', 'img/Next.png');   	
 	},
 
 	create: function () {
@@ -13,7 +13,7 @@ var instructionsState = {
 		console.log('Create: menuState');
 		this.add.image(0,0,'bng');
         keyboard=game.input.keyboard;
-    	startButton = this.add.button(this.world.centerX + 180 , 520,'start', this.startGame, this); 
+    	nextButton = this.add.button(this.world.centerX + 180 , 520,'next', this.goToInstructions2, this); 
     	backButton = this.add.button(this.world.centerX  - 380, 520,'back', this.goToMenu, this);
 	},
     update: function(){
@@ -22,8 +22,8 @@ var instructionsState = {
         }  
     },
 	
-	 startGame: function() {
-     	this.state.start('play');
+	 goToInstructions2: function() {
+     	this.state.start('instructionsPg2');
 	},
 
 	 goToMenu: function() {
