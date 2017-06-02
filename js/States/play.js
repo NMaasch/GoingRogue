@@ -13,6 +13,12 @@ var playerHole=false;
 
 var playState = {
 	create: function () {
+        // Music and SFX here:
+		music_caution = game.add.audio('caution-theme',.8 , true);
+		music_alert = game.add.audio('alert-theme', .8, true);
+		sfx_alert = game.add.audio('alert', .9, false);
+		music_caution.play();
+        
 		this.dead = false;
 		this.spotted = false;
         ammo = 0;
@@ -70,8 +76,8 @@ var playState = {
         potholes.potCount=0; //Create a variable per pothole object.        
             
         //Pothole creation on level.
-        this.createPothole(220,700);
-        this.createPothole(640,300);
+        this.createPothole(200,700);
+        this.createPothole(620,300);
         
 		// add player image
 		player = game.add.sprite(500, 500, 'player');
@@ -132,12 +138,6 @@ var playState = {
 		inv.fixedToCamera = true;
 		inv.cameraOffset.setTo(10, 500);
 		inv.animations.play('empty');
-
-		// Music and SFX here:
-		music_caution = game.add.audio('caution-theme',.8 , true);
-		music_alert = game.add.audio('alert-theme', .8, true);
-		sfx_alert = game.add.audio('alert', .9, false);
-		music_caution.play();
 	},
 	gameOver: function(){
 		player.kill();
