@@ -36,6 +36,20 @@ It is also the portal for the player to access game functionality.
 
 -----------------------------------------------------------------------------
 
+instructions.js
+
+This is the state that manages the instructions of the game.
+It is also the portal for the player to access the menu or the the second page of the instructions.
+
+-----------------------------------------------------------------------------
+
+instructionsPg2.js
+
+This is the state that manages the second page of the instructions of the game.
+It is also the portal for the player to access the game or the the first page of the instructions.
+
+-----------------------------------------------------------------------------
+
 play.js
 
 The main game loop resides here.
