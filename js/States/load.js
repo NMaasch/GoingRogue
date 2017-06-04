@@ -22,7 +22,7 @@ var loadState = {
         game.load.image('timerbox','img/hud/trans.png');
 		game.load.image('bar','img/hud/bar.png');
 		game.load.spritesheet('inventory', 'img/hud/inventory.png', 132, 82);
-
+        game.load.spritesheet('spacebar','img/spacebar.png',200,91);
 
 
 		// Sounds for game
