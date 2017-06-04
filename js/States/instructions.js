@@ -16,17 +16,15 @@ var instructionsState = {
     	nextButton = this.add.button(this.world.centerX + 180 , 520,'next', this.goToInstructions2, this); 
     	backButton = this.add.button(this.world.centerX  - 380, 520,'back', this.goToMenu, this);
 	},
-    update: function(){
-      if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-            this.state.start('play');
-        }  
-    },
+
 	
 	 goToInstructions2: function() {
+	 	button.play();
      	this.state.start('instructionsPg2');
 	},
 
 	 goToMenu: function() {
+	 	button.play();
 	    this.state.start('menu');
 	 },
 };
