@@ -72,6 +72,8 @@ var loadState = {
 			&& this.cache.isSoundDecoded('caution-theme')
 			&& this.cache.isSoundDecoded('yay')
 			&& this.cache.isSoundDecoded('theme')) {
+            theme=game.add.audio('theme',0.6,true);
+            theme.play();
 			game.state.start('menu');
 		}
 	}

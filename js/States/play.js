@@ -22,7 +22,7 @@ var ammo;
 var firstCollect;
 var playerHole=false;
 var fill_angle = 0;
-var toggle = false;
+var toggle = true;
 
 var playState = {
 	create: function () {
@@ -135,13 +135,14 @@ var playState = {
         game.physics.enable(arrow, Phaser.Physics.ARCADE);
         arrow.fixedToCamera = true;
         arrow.cameraOffset.setTo(350, 300);
+        arrow.alpha=0;
         
         arrow2 = game.add.sprite(0, 0, 'arrow2');
         arrow2.anchor.setTo(0.5, 0.5); 
         game.physics.enable(arrow2, Phaser.Physics.ARCADE);
         arrow2.fixedToCamera = true;
         arrow2.cameraOffset.setTo(550, 300);
-
+        arrow2.alpha=0;
 
         //spacebar
 		spacebar=game.add.sprite(-100,0,'spacebar');
