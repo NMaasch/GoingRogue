@@ -11,13 +11,18 @@ var loadState = {
 		// Images for game
 		game.load.path = 'assets/';
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
-        game.load.tilemap('level','img/map1.json', null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('bgTile','img/temp.png');
-        game.load.image('roadTile','img/roads.png');
-        game.load.image('buildingTile','img/buildings.jpeg');
+        //game.load.tilemap('level','img/map1.json', null, Phaser.Tilemap.TILED_JSON);
+        //game.load.image('bgTile','img/temp.png');
+        //game.load.image('roadTile','img/roads.png');
+        //game.load.image('buildingTile','img/buildings.jpeg');
+        game.load.tilemap('level1','img/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('Tilesheet','img/Tilesheet.png');
         game.load.image('pothole','img/pothole.png');
         game.load.image('car','img/car.png');
-        game.load.image('fill', 'img/box.png');
+        game.load.image('poCar', 'img/PopoCar2.png');
+        game.load.image('fill', 'img/cementBag.png');
+        game.load.image('arrow', 'img/arrow.png');
+        game.load.image('arrow2', 'img/arrow2.png');
         // hud 
         game.load.image('timerbox','img/hud/trans.png');
 		game.load.image('bar','img/hud/bar.png');
