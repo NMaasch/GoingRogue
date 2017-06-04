@@ -75,7 +75,6 @@ var introState = {
     update: function(){
         if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
             music_drum.stop();
-            sfx_impact.stop();
             sfx_horns.stop();
             this.state.start('play');
         }

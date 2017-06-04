@@ -16,17 +16,17 @@ var instructionsPg2State = {
     	startButton = this.add.button(this.world.centerX + 180 , 520,'start', this.startGame, this); 
     	backButton = this.add.button(this.world.centerX  - 380, 520,'back', this.goToInstructions, this);
 	},
-    update: function(){
-      if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-            this.state.start('play');
-        }  
-    },
+
 	
 	 startGame: function() {
+	 	theme.destroy();
+	 	button.play();
      	this.state.start('play');
 	},
 
 	 goToInstructions: function() {
+	 	button.play();
+
 	    this.state.start('instructions');
 	 },
 };
