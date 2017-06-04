@@ -6,11 +6,23 @@ var points;
 var count = 1;
 var px = [0];
 var py = [0];
+var px2 = [0];
+var py2 = [0];
+var px3 = [0];
+var py3 = [0];
+var px4 = [0];
+var py4 = [0];
+var count = 1;
+var count2 = 1;
+var percentScore;
+var numHoles;
+var tweenScore;
 var potCount;
 var ammo;
 var firstCollect;
 var playerHole=false;
 var fill_angle = 0;
+var toggle = false;
 
 var playState = {
 	create: function () {
@@ -25,6 +37,8 @@ var playState = {
         ammo = 0;
         firstCollect = false;
         potCount=0;
+        numHoles = 2;
+        percentScore = 1/numHoles;
 		//TIME FOR LEVEL
 		this.time = 60000 / 2; 
 		
@@ -40,16 +54,26 @@ var playState = {
         //array correspond to one point (x[1] = 600, y[1] = 600) is 600, 600 
         //on coordinate plane
         points = {
-            'x' : [64, 480,480,64,64],
-            'y' : [480, 480,64,64,480]
+            'x' : [0, 800],
+            'y' : [479, 479]
+        };
+        
+        points2 = {
+            'x' :[255, 255],
+            'y' :[0, 1000]
+        };
+        
+        points3 = {
+            'x' :[672, 672],
+            'y' :[0, 700]
         };
         
         //Prelim variable instantiation
         //Make increment smaller for faster moving sprite and vice versa
-        increment = 1/400;
-        i = 0;
-        timerStopped = true;
-        timer1 = null;
+        //increment = 1/400;
+        //i = 0;
+        //timerStopped = true;
+        //timer1 = null;
         
         //Creating bitmap
         bmd = this.add.bitmapData(game.width, game.height);
@@ -99,11 +123,24 @@ var playState = {
 		player.body.collideWorldBounds = true;
         
         //Adding car
-        car = new Car(game, 'car', 900, 500);
+        car = new Car(game, 'car', 900, 500, points, 1200, true, 100);
         car.body.setSize(70,70,27,25);
         game.add.existing(car);
         //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
         //tween.onComplete.addOnce(this.tween2, this);
+        
+        //Arrows for pointing the player towards cement and potholes
+        arrow = game.add.sprite(0, 0, 'arrow');
+        arrow.anchor.setTo(0.5, 0.5); 
+        game.physics.enable(arrow, Phaser.Physics.ARCADE);
+        arrow.fixedToCamera = true;
+        arrow.cameraOffset.setTo(350, 300);
+        
+        arrow2 = game.add.sprite(0, 0, 'arrow2');
+        arrow2.anchor.setTo(0.5, 0.5); 
+        game.physics.enable(arrow2, Phaser.Physics.ARCADE);
+        arrow2.fixedToCamera = true;
+        arrow2.cameraOffset.setTo(550, 300);
 
 
         //spacebar
@@ -133,7 +170,7 @@ var playState = {
         // hud  here:
 		// Admiration Levels
 		bar = game.add.sprite(500, 100, 'bar_empty');
-		bar.anchor.setTo(.5);
+		bar.anchor.setTo(1);
 		bar.fixedToCamera = true;
 		bar.cameraOffset.setTo(765, 460);
 
@@ -143,9 +180,11 @@ var playState = {
 		bar_fill.anchor.setTo(.5);
 		bar_fill.fixedToCamera = true;
 		bar_fill.cameraOffset.setTo(765, 460);
-
-
 		*/
+        
+        var tweenBar = game.add.tween(bar.scale).to({y: 0}, 10, "Linear", true, 0, 0);
+        
+        tweenBar.start();
 
 		// Filler Inventory
 		inv = game.add.sprite(0, 20, 'inventory');
@@ -178,6 +217,16 @@ var playState = {
 
 	collectFill: function(player, fill){
         if(firstCollect == false){
+            
+            //Adding in cop cars when cement is first collected
+            car2 = new Car(game, 'poCar', 0, 0, points2, 1000, false, 200);
+            car2.body.setSize(110,223,55,-66);
+            game.add.existing(car2);
+            
+            car3 = new Car(game, 'poCar', 0, 0, points3, 1000, false, 200);
+            car3.body.setSize(110,223,55,-66);
+            game.add.existing(car3);
+            
 		  box = game.add.sprite(20, 20, 'timerbox');
 		  box.scale.setTo(1.2,1.4);
 		  box.anchor.setTo(.5);
@@ -207,6 +256,64 @@ var playState = {
 	update: function() {		
 		//console.log('Update: playState');
         
+        //Car rotation
+        //Saving car's position so that the angle may be calculated
+        
+        px.push(car.x);
+        py.push(car.y);
+        
+        angle = game.math.angleBetween(px[count-1], py[count-1], px[count], py[count]);
+        car.rotation = angle;
+        
+        //Rotating cop car along its path
+        if(ammo > 0){
+            px2.push(car2.x);
+            py2.push(car2.y);
+        
+            angle2 = game.math.angleBetween(px2[count2-1], py2[count2-1], px2[count2], py2[count2]);
+            car2.rotation = angle2;
+        
+            px3.push(car3.x);
+            py3.push(car3.y);
+        
+            angle3 = game.math.angleBetween(px3[count2-1], py3[count2-1], px3[count2], py3[count2]);
+            car3.rotation = angle3;
+            
+            game.physics.arcade.overlap(player,car2,this.wasHit,null,this);
+            game.physics.arcade.overlap(player,car3,this.wasHit,null,this);
+            
+            count2++;
+        }
+        
+        count++;
+        
+        //Arrow stuff
+        
+        //Finding closest pothole and pointing arrow at it
+        var closestPothole = potholes.getClosestTo(player, null, this);
+        
+        if(closestPothole != null){
+            arrow.rotation = game.physics.arcade.angleBetween(arrow, closestPothole);
+        }else{
+            arrow.kill();
+        }
+        
+        //Finding closest cement bag and pointing at it
+        var closestCement = filler.getClosestTo(player, null, this);
+        
+        if(closestCement != null){
+            arrow2.rotation = game.physics.arcade.angleBetween(arrow2, closestCement);
+        }else{
+            arrow2.kill();
+        }
+        
+        //Toggling arrows visibility
+        if(keyboard.justPressed(Phaser.Keyboard.E)){
+            arrow.alpha = toggle;
+            arrow2.alpha = toggle;
+            toggle = !toggle;
+        }
+        
         inv.frame = ammo;
 
         //rotation for fill
@@ -228,12 +335,12 @@ var playState = {
 			timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1); 
 			this.time = this.time - 20;
 		}	
-        if(timerStopped){
+        /*if(timerStopped){
             timerStopped = false;
             timer1 = game.time.create(true);
             timer1.loop(.01, this.plot, this);
             timer1.start();
-        }
+        }*/
 		
 		// Add collision:
 		game.physics.arcade.overlap(player, filler, this.collectFill, null, this);
@@ -324,31 +431,6 @@ var playState = {
         this.gameOver();
         //console.log('wasHit');
     },
-    plot: function(){
-        var posx = this.math.linearInterpolation(points.x, i);
-        var posy = this.math.linearInterpolation(points.y, i);
-        car.x = posx;
-        car.y = posy;
-        i += increment;
-        
-        px.push(posx);
-        py.push(posy);
-        //console.log(px);
-        
-        angle = this.math.angleBetween(px[count-1], py[count-1], posx, posy);
-        car.rotation = angle;
-        //posy in this case will terminate the sprite when it reaches a certain
-        //y-position. Can be changed to terminate upon reaching certain 
-        //x-pos
-        if(posy > 480) {
-            timer1.stop();
-            timer1.destroy();
-            i = 0;
-            timerStopped = true;
-        }
-        count++;
-    },
-    
     createPothole: function(x,y){
         var pothole = potholes.create(x,y,'pothole');
         var potholeCount=0;
@@ -365,7 +447,22 @@ var playState = {
                 potholes.remove(pothole);
                 potholes.potCount = 0;
                 ammo--;
+                updateScore();
             }
         }
     } 
+}
+
+function updateScore(){
+        //console.log(barHeight);
+        percentScore = 1/numHoles;
+        console.log(percentScore);
+      
+        var t1 = game.add.tween(bar.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
+      
+        t1.start();
+      
+        if(numHoles > 1){
+            numHoles--;
+        }
 }

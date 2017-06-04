@@ -17,6 +17,9 @@ var loadState = {
         game.load.image('Tilesheet','img/Tilesheet.png');
         game.load.image('pothole','img/pothole.png');
         game.load.image('car','img/car.png');
+        game.load.image('poCar', 'img/PopoCar2.png');
+        game.load.image('arrow', 'img/arrow.png');
+        game.load.image('arrow2', 'img/arrow2.png');
         game.load.image('fill', 'img/cementBag.png');
         game.load.spritesheet('explosion', 'img/explosion.png', 64, 64);
         // hud 
@@ -69,8 +72,6 @@ var loadState = {
 			&& this.cache.isSoundDecoded('caution-theme')
 			&& this.cache.isSoundDecoded('yay')
 			&& this.cache.isSoundDecoded('theme')) {
-            theme = game.add.audio('theme', .4, true);
-		    theme.play();
 			game.state.start('menu');
 		}
 	}
