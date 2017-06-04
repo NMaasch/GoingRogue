@@ -18,6 +18,7 @@ var instructionsPg2State = {
 	},
      update: function(){ 
       if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){ 
+            theme.destroy();
             this.state.start('play'); 
         }   
     },
@@ -30,7 +31,6 @@ var instructionsPg2State = {
 
 	 goToInstructions: function() {
 	 	button.play();
-
 	    this.state.start('instructions');
 	 },
 };

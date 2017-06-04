@@ -14,16 +14,13 @@ var menuState = {
 		music_caution = game.add.audio('caution-theme',.5 , true);
 		music_alert = game.add.audio('alert-theme', .5, true);
 		sfx_alert = game.add.audio('alert', .6, false);
-		footstep =game.add.audio('footsteps', .6, true);
+		footstep =game.add.audio('footsteps', .2, true);
 		ambience = game.add.audio('ambience', .4, true);
 		ticking = game.add.audio('tick', .8, false);
-		fix = game.add.audio('fix', .7, false);
+		fix = game.add.audio('fix', .9, false);
 		explosion = game.add.audio('explosion', .6, false);
 		pothole_complete = game.add.audio('pothole_complete', 1, false);
-
-
-		theme = game.add.audio('theme', .4, true);
-		theme.play();
+        
 		button = game.add.audio('button', .8, false);
 		
 		//console log, setting bounds of game, setting camera
