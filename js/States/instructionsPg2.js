@@ -17,9 +17,10 @@ var instructionsPg2State = {
     	backButton = this.add.button(this.world.centerX  - 380, 520,'back', this.goToInstructions, this);
 	},
      update: function(){ 
-      if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){ 
+      if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+            button.play();
             theme.destroy();
-            this.state.start('play'); 
+            this.state.start('intro'); 
         }   
     },
 	

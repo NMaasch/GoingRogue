@@ -18,7 +18,8 @@ var instructionsState = {
 	},
     update: function(){ 
       if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){ 
-            this.state.start('instructionsPg2'); 
+            button.play();
+            this.state.start('instructionsPg2');
         }   
     },
 	 goToInstructions2: function() {
