@@ -24,6 +24,7 @@ var loadState = {
 		game.load.image('bar_empty','img/hud/bar_empty.png');
 		game.load.image('bar_full','img/hud/bar_full.png');
 		game.load.spritesheet('inventory', 'img/hud/inventory.png', 132, 82);
+		game.load.spritesheet('spacebar','img/spacebar.png',200,91);
 		
 
 

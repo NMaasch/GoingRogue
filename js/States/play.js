@@ -104,6 +104,12 @@ var playState = {
         game.add.existing(car);
         //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
         //tween.onComplete.addOnce(this.tween2, this);
+
+
+        //spacebar
+		spacebar=game.add.sprite(-100,0,'spacebar');
+      	spacebar.animations.add('smash');
+      	spacebar.animations.play('smash',8,true);
         	
 		// Add Keyboard movement/actions here:
 		keyboard = game.input.keyboard;
@@ -143,14 +149,12 @@ var playState = {
 
 		// Filler Inventory
 		inv = game.add.sprite(0, 20, 'inventory');
-		inv.animations.add('empty', [0], false);
 		//inv.animations.add('1', [1], false);
 		//inv.animations.add('2', [2], false);
 		//inv.scale.setTo(.8,.8)
 		//inv.anchor.setTo(.5);
 		inv.fixedToCamera = true;
 		inv.cameraOffset.setTo(10, 500);
-		inv.animations.play('empty');
 	},
 
 
@@ -284,9 +288,14 @@ var playState = {
 		// Specify in the "Instructions" that the player is to tap on spacebar.
 		playerHole = game.physics.arcade.overlap(player,potholes);
         if(playerHole == true && ammo>0){
+        	spacebar.x=player.x-100;
+        	spacebar.y=player.y-100;
             game.physics.arcade.overlap(player,potholes,this.killPothole);
         }
-        else{potholes.potCount = 0;}
+        else{
+        	potholes.potCount = 0;
+        	spacebar.x=-300;
+        }
 
         if(this.dead==true){
         	if(keyboard.isDown(Phaser.Keyboard.R)){
@@ -294,14 +303,14 @@ var playState = {
         		music_alert.stop();
         		ambience.stop();
         		ticking.stop();
-        		game.state.start('menu');
+        		game.state.start('play');
 			}
         }
 	},
 	render: function(){//used to debug~!!!!!~ 
         //game.debug.bodyInfo(player,32,32);
         //game.debug.body(player);
-        //game.debug.body(pothole);
+        //game.debug.body(potholes);
         //game.debug.body(car);
     },
 	Win: function() {
@@ -350,6 +359,7 @@ var playState = {
         if(game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
             potholes.potCount++;
             fix.play();
+            game.camera.shake(0.01,300);
             if(potholes.potCount== 10){
             	pothole_complete.play();
                 potholes.remove(pothole);
