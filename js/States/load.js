@@ -25,8 +25,8 @@ var loadState = {
         game.load.spritesheet('explosion', 'img/explosion.png', 64, 64);
         // hud 
         game.load.image('timerbox','img/hud/trans.png');
-		game.load.image('bar_empty','img/hud/bar_empty.png');
-		game.load.image('bar_full','img/hud/bar_full.png');
+		game.load.image('bar_empty','img/hud/bar-empty.png');
+		game.load.image('bar_full','img/hud/bar_full_fill.png');
 		game.load.spritesheet('inventory', 'img/hud/inventory.png', 132, 82);
 		game.load.spritesheet('spacebar','img/spacebar.png',200,91);
 		

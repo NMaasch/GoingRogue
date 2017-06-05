@@ -169,24 +169,23 @@ var playState = {
         fill.scale.setTo(0.2);
 		
         // hud  here:
+        
+        // NEXT SET OF LINES TO ADD IN THE FILLED BAR
+        bar_fill = game.add.sprite(500, 100, 'bar_full');
+		bar_fill.anchor.setTo(1);
+		bar_fill.fixedToCamera = true;
+		bar_fill.cameraOffset.setTo(763, 497);
+        
+        var tweenBar = game.add.tween(bar_fill.scale).to({y: 0}, 10, "Linear", true, 0, 0);
+        
+        tweenBar.start();
+        
 		// Admiration Levels
 		bar = game.add.sprite(500, 100, 'bar_empty');
 		bar.anchor.setTo(1);
 		bar.fixedToCamera = true;
-		bar.cameraOffset.setTo(765, 460);
-
-	// NEXT SET OF LINES TO ADD IN THE FILLED BAR
-		/* 
-		bar_fill = game.add.sprite(500, 100, 'bar_full');
-		bar_fill.anchor.setTo(.5);
-		bar_fill.fixedToCamera = true;
-		bar_fill.cameraOffset.setTo(765, 460);
-		*/
-        
-        var tweenBar = game.add.tween(bar.scale).to({y: 0}, 10, "Linear", true, 0, 0);
-        
-        tweenBar.start();
-
+		bar.cameraOffset.setTo(765, 500);
+		
 		// Filler Inventory
 		inv = game.add.sprite(0, 20, 'inventory');
 		//inv.animations.add('1', [1], false);
@@ -267,7 +266,7 @@ var playState = {
         car.rotation = angle;
         
         //Rotating cop car along its path
-        if(ammo > 0){
+        if(numHoles > 0 && firstCollect){
             px2.push(car2.x);
             py2.push(car2.y);
         
@@ -426,7 +425,7 @@ var playState = {
 		console.log('Win: playState');
 		
 		// Function call to winState.
-		game.state.start('play');
+		game.state.start('win');
 	},
     wasHit: function(){
         this.gameOver();
@@ -457,9 +456,9 @@ var playState = {
 function updateScore(){
         //console.log(barHeight);
         percentScore = 1/numHoles;
-        console.log(percentScore);
+        //console.log(percentScore);
       
-        var t1 = game.add.tween(bar.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
+        var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
       
         t1.start();
       
