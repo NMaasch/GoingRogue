@@ -139,6 +139,13 @@ var playState = {
         arrow2.fixedToCamera = true;
         arrow2.cameraOffset.setTo(550, 300);
         arrow2.alpha=0;
+        
+        conText = game.add.text(16, 16, "Press 'E' to toggle indicators", {fontSize: '32px', fill: '#f9eb1d'});
+        conText.anchor.set(0);
+        conText.fixedToCamera = true;
+        conText.cameraOffset.setTo(16, 16);
+        //Fade text off screen
+        game.time.events.add(10000, function(){game.add.tween(conText).to({alpha: 0}, 2000, "Linear", true)}, this);
 
         //spacebar
 		spacebar=game.add.sprite(-100,0,'spacebar');
@@ -413,8 +420,8 @@ var playState = {
 	render: function(){//used to debug~!!!!!~ 
         //game.debug.bodyInfo(player,32,32);
         //game.debug.body(player);
-        //game.debug.body(potholes);
         //game.debug.body(car);
+        //potholes.forEach(this.game.debug.body, this.game.debug);
     },
 	Win: function() {
 		
@@ -431,6 +438,8 @@ var playState = {
         var pothole = potholes.create(x,y,'pothole');
         var potholeCount=0;
         pothole.scale.setTo(0.2,0.2);
+        //pothole.anchor.setTo(0.5);
+        //pothole.body.setSize(160, 160, 100, 100);
     },
     
     killPothole: function(player,pothole){
@@ -446,7 +455,7 @@ var playState = {
                 updateScore();
             }
         }
-    } 
+    }
 }
 
 function updateScore(){
