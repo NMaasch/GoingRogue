@@ -1,9 +1,6 @@
 // Instantiate playState
 var car;
-var tween;
 var bmd;
-var points;
-var count = 1;
 var px = [0];
 var py = [0];
 var px2 = [0];
@@ -16,7 +13,6 @@ var count = 1;
 var count2 = 1;
 var percentScore;
 var numHoles;
-var tweenScore;
 var potCount;
 var ammo;
 var firstCollect;

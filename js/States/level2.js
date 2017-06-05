@@ -1,5 +1,5 @@
 // Instantiate playState
-var car;
+/*var car;
 var tween;
 var bmd;
 var points;
@@ -84,7 +84,7 @@ var level2State = {
             var posx = this.math.linearInterpolation(points.x, j);
             var posy = this.math.linearInterpolation(points.y, j);
             bmd.rect(posx, posy, 3, 3, 'rgba(245, 0, 0, 1)');
-        }*/
+        }
         
 		// add image background and buildings
         map=game.add.tilemap('level2');
@@ -181,11 +181,11 @@ var level2State = {
 		bar_fill.anchor.setTo(.5);
 		bar_fill.fixedToCamera = true;
 		bar_fill.cameraOffset.setTo(765, 460);
-		*/
+		
         
-        var tweenBar = game.add.tween(bar.scale).to({y: 0}, 10, "Linear", true, 0, 0);
+       // var tweenBar = game.add.tween(bar.scale).to({y: 0}, 10, "Linear", true, 0, 0);
         
-        tweenBar.start();
+        //tweenBar.start();
 
 		// Filler Inventory
 		inv = game.add.sprite(0, 20, 'inventory');
@@ -341,7 +341,7 @@ var level2State = {
             timer1 = game.time.create(true);
             timer1.loop(.01, this.plot, this);
             timer1.start();
-        }*/
+        }
 		
 		// Add collision:
 		game.physics.arcade.overlap(player, filler, this.collectFill, null, this);
@@ -459,9 +459,9 @@ function updateScore(){
         percentScore = 1/numHoles;
         console.log(percentScore);
       
-        var t1 = game.add.tween(bar.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
+        //var t1 = game.add.tween(bar.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
       
-        t1.start();
+        //t1.start();
       
         if(numHoles > 1){
             numHoles--;
