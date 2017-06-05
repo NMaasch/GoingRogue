@@ -24,7 +24,7 @@ var playerHole=false;
 var fill_angle = 0;
 var toggle = true;
 
-var playState = {
+var level2State = {
 	create: function () {
 		
         // Music and SFX here:
@@ -87,7 +87,7 @@ var playState = {
         }*/
         
 		// add image background and buildings
-        map=game.add.tilemap('level1');
+        map=game.add.tilemap('level2');
         map.addTilesetImage('Tilesheet','Tilesheet');
         mapBackground = map.createLayer('Background');
         mapRoads = map.createLayer('Roads');
@@ -101,7 +101,7 @@ var playState = {
         potholes.potCount=0; //Create a variable per pothole object.        
             
         //Pothole creation on level.
-        this.createPothole(200,700);
+        this.createPothole(64,200);
         this.createPothole(620,300);
         
 		// add player image
@@ -156,7 +156,7 @@ var playState = {
 
 		//Cement filler group
         filler = game.add.group();
-		fill1 = filler.create(825, 725,'fill');
+		fill1 = filler.create(96, 125,'fill');
 		game.physics.enable(fill1, Phaser.Physics.ARCADE);
 		fill1.body.immovable = true;
         fill1.anchor.setTo(0.5);
@@ -426,7 +426,7 @@ var playState = {
 		console.log('Win: playState');
 		
 		// Function call to winState.
-		game.state.start('play');
+		game.state.start('win');
 	},
     wasHit: function(){
         this.gameOver();
