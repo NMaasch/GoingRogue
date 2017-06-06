@@ -19,49 +19,49 @@ var introState = {
         music_drum=game.add.audio('drum',.6,true);
         music_drum.play();
         sfx_horns = game.add.audio('horns',.4,false);
-        timer.add(1000,function(){
+        timer.add(950,function(){
             introText = game.add.text(400,300,'In A World',{fontSize:64, fill:'white'});
             introText.anchor.set(0.5);
             game.add.tween(introText).to({alpha:0},2500,"Linear",true);
             },this
         );
-       timer.add(3500,function(){
+       timer.add(3400,function(){
             introText = game.add.text(400,300,'Filled with Despair',{fontSize:64, fill:'white'});
             introText.anchor.set(0.5);
             game.add.tween(introText).to({alpha:0},2500,"Linear",true);
             },this
         );
-        timer.add(6000,function(){
+        timer.add(5900,function(){
             introText = game.add.text(400,300,'One Man',{fontSize:64, fill:'white'});
             introText.anchor.set(0.5);
             game.add.tween(introText).to({alpha:0},2500,"Linear",true);
             },this
         );
-        timer.add(8500,function(){
+        timer.add(8400,function(){
             introText = game.add.text(400,300,'Will Save His People',{fontSize:64, fill:'white'});
             introText.anchor.set(0.5);
             game.add.tween(introText).to({alpha:0},2500,"Linear",true);
             },this
         );
-        timer.add(11000,function(){
+        timer.add(10900,function(){
             introText = game.add.text(400,300,'From the Negligent\n\t\t\t\t\t\tGovernment',{fontSize:64, fill:'white'});
             introText.anchor.set(0.5);
             game.add.tween(introText).to({alpha:0},2500,"Linear",true);
             },this
         );
-        timer.add(13500,function(){
+        timer.add(13400,function(){
             introText = game.add.text(400,300,'By',{fontSize:64, fill:'white'});
             introText.anchor.set(0.5);
             game.add.tween(introText).to({alpha:0},2500,"Linear",true);
             },this
         );
-        timer.add(16000,function(){
+        timer.add(15900,function(){
             introText = game.add.text(400,300,'Fixing Potholes',{fontSize:64, fill:'white'});
             introText.anchor.set(0.5);
             game.add.tween(introText).to({alpha:0},2500,"Linear",true);
             },this
         );
-        timer.add(18500,function(){
+        timer.add(18400,function(){
             sfx_horns.play();
             introText = game.add.text(400,300,'Press [Spacebar] to liberate',{fontSize:56, fill:'white'});
             introText.anchor.set(0.5);
