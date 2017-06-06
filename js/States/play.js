@@ -101,7 +101,7 @@ var playState = {
         this.createPothole(620,300);
         
 		// add player image
-		player = game.add.sprite(500, 500, 'player');
+		player = game.add.sprite(80, 160, 'player');
 		player.scale.setTo(.4,.4);
 		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
 		player.anchor.setTo(0.5, 0.5);
