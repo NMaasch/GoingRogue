@@ -211,7 +211,7 @@ var level2State = {
 		explosion.play();
 
 
-		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER\nPress "r" to return to menu ',{font: '30px Helvitica', fill: '#FFFFFF'});
+		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER\nPress "R" to Restart the Level ',{font: '30px Helvitica', fill: '#FFFFFF'});
 		this.gameover.fixedToCamera = true;
 		this.gameover.anchor.setTo(.5);
 		this.gameover.cameraOffset.setTo(400, 300);
@@ -413,7 +413,7 @@ var level2State = {
         		music_alert.stop();
         		ambience.stop();
         		ticking.stop();
-        		game.state.start('play');
+        		game.state.start('level2State');
 			}
         }
 	},
