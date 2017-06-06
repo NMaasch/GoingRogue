@@ -10,6 +10,7 @@ var loadState = {
         //var logo = game.add.image(0,0,'logo');
 		var loadingLabel = game.add.text(325,400,'loading...',{font: '30px Courier', fill: '#ffffff'});
 		//var logo = game.add.image(0,0,'logo');
+		
 		// Images for game
 		game.load.path = 'assets/';
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
@@ -23,6 +24,8 @@ var loadState = {
         game.load.image('arrow2', 'img/arrow2.png');
         game.load.image('fill', 'img/cementBag.png');
         game.load.spritesheet('explosion', 'img/explosion.png', 64, 64);
+		game.load.spritesheet('potholeAnim', 'img/potholeSheet.png', 128, 128);
+		
         // hud 
         game.load.image('timerbox','img/hud/trans.png');
 		game.load.image('bar_empty','img/hud/bar-empty.png');
