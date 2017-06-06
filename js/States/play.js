@@ -413,7 +413,7 @@ var playState = {
         		music_alert.stop();
         		ambience.stop();
         		ticking.stop();
-        		game.state.start('play');
+        		game.state.start('level2State');
 			}
         }
 	},

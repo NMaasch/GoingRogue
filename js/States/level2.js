@@ -1,9 +1,6 @@
-// Instantiate playState
-/*var car;
-var tween;
+// Instantiate level2State
+var car;
 var bmd;
-var points;
-var count = 1;
 var px = [0];
 var py = [0];
 var px2 = [0];
@@ -16,7 +13,6 @@ var count = 1;
 var count2 = 1;
 var percentScore;
 var numHoles;
-var tweenScore;
 var potCount;
 var ammo;
 var firstCollect;
@@ -84,7 +80,7 @@ var level2State = {
             var posx = this.math.linearInterpolation(points.x, j);
             var posy = this.math.linearInterpolation(points.y, j);
             bmd.rect(posx, posy, 3, 3, 'rgba(245, 0, 0, 1)');
-        }
+        }*/
         
 		// add image background and buildings
         map=game.add.tilemap('level2');
@@ -101,7 +97,7 @@ var level2State = {
         potholes.potCount=0; //Create a variable per pothole object.        
             
         //Pothole creation on level.
-        this.createPothole(64,200);
+        this.createPothole(200,700);
         this.createPothole(620,300);
         
 		// add player image
@@ -143,6 +139,13 @@ var level2State = {
         arrow2.fixedToCamera = true;
         arrow2.cameraOffset.setTo(550, 300);
         arrow2.alpha=0;
+        
+        conText = game.add.text(16, 16, "Press 'E' to toggle indicators", {fontSize: '32px', fill: '#f9eb1d'});
+        conText.anchor.set(0);
+        conText.fixedToCamera = true;
+        conText.cameraOffset.setTo(16, 16);
+        //Fade text off screen
+        game.time.events.add(10000, function(){game.add.tween(conText).to({alpha: 0}, 2000, "Linear", true)}, this);
 
         //spacebar
 		spacebar=game.add.sprite(-100,0,'spacebar');
@@ -156,7 +159,7 @@ var level2State = {
 
 		//Cement filler group
         filler = game.add.group();
-		fill1 = filler.create(96, 125,'fill');
+		fill1 = filler.create(825, 725,'fill');
 		game.physics.enable(fill1, Phaser.Physics.ARCADE);
 		fill1.body.immovable = true;
         fill1.anchor.setTo(0.5);
@@ -169,24 +172,23 @@ var level2State = {
         fill.scale.setTo(0.2);
 		
         // hud  here:
+        
+        // NEXT SET OF LINES TO ADD IN THE FILLED BAR
+        bar_fill = game.add.sprite(500, 100, 'bar_full');
+		bar_fill.anchor.setTo(1);
+		bar_fill.fixedToCamera = true;
+		bar_fill.cameraOffset.setTo(763, 497);
+        
+        var tweenBar = game.add.tween(bar_fill.scale).to({y: 0}, 10, "Linear", true, 0, 0);
+        
+        tweenBar.start();
+        
 		// Admiration Levels
 		bar = game.add.sprite(500, 100, 'bar_empty');
 		bar.anchor.setTo(1);
 		bar.fixedToCamera = true;
-		bar.cameraOffset.setTo(765, 460);
-
-	// NEXT SET OF LINES TO ADD IN THE FILLED BAR
-		/* 
-		bar_fill = game.add.sprite(500, 100, 'bar_full');
-		bar_fill.anchor.setTo(.5);
-		bar_fill.fixedToCamera = true;
-		bar_fill.cameraOffset.setTo(765, 460);
+		bar.cameraOffset.setTo(765, 500);
 		
-        
-       // var tweenBar = game.add.tween(bar.scale).to({y: 0}, 10, "Linear", true, 0, 0);
-        
-        //tweenBar.start();
-
 		// Filler Inventory
 		inv = game.add.sprite(0, 20, 'inventory');
 		//inv.animations.add('1', [1], false);
@@ -267,7 +269,7 @@ var level2State = {
         car.rotation = angle;
         
         //Rotating cop car along its path
-        if(ammo > 0){
+        if(numHoles > 0 && firstCollect){
             px2.push(car2.x);
             py2.push(car2.y);
         
@@ -341,7 +343,7 @@ var level2State = {
             timer1 = game.time.create(true);
             timer1.loop(.01, this.plot, this);
             timer1.start();
-        }
+        }*/
 		
 		// Add collision:
 		game.physics.arcade.overlap(player, filler, this.collectFill, null, this);
@@ -418,8 +420,8 @@ var level2State = {
 	render: function(){//used to debug~!!!!!~ 
         //game.debug.bodyInfo(player,32,32);
         //game.debug.body(player);
-        //game.debug.body(potholes);
         //game.debug.body(car);
+        //potholes.forEach(this.game.debug.body, this.game.debug);
     },
 	Win: function() {
 		
@@ -436,6 +438,8 @@ var level2State = {
         var pothole = potholes.create(x,y,'pothole');
         var potholeCount=0;
         pothole.scale.setTo(0.2,0.2);
+        //pothole.anchor.setTo(0.5);
+        //pothole.body.setSize(160, 160, 100, 100);
     },
     
     killPothole: function(player,pothole){
@@ -451,17 +455,17 @@ var level2State = {
                 updateScore();
             }
         }
-    } 
+    }
 }
 
 function updateScore(){
         //console.log(barHeight);
         percentScore = 1/numHoles;
-        console.log(percentScore);
+        //console.log(percentScore);
       
-        //var t1 = game.add.tween(bar.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
+        var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
       
-        //t1.start();
+        t1.start();
       
         if(numHoles > 1){
             numHoles--;
