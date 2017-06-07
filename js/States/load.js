@@ -23,6 +23,7 @@ var loadState = {
         game.load.image('arrow2', 'img/arrow2.png');
         game.load.image('fill', 'img/cementBag.png');
         game.load.spritesheet('explosion', 'img/explosion.png', 64, 64);
+        game.load.spritesheet('potholeAnim','img/potholeSheet.png',128,128);
         // hud 
         game.load.image('timerbox','img/hud/trans.png');
 		game.load.image('bar_empty','img/hud/bar-empty.png');
