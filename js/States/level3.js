@@ -22,7 +22,7 @@ var toggle = true;
 var spotted;
 var check;
 
-var level2State = {
+var level3State = {
 	create: function () {
 		
         // Music and SFX here:
@@ -87,7 +87,7 @@ var level2State = {
         }*/
         
 		// add image background and buildings
-        map=game.add.tilemap('level2');
+        map=game.add.tilemap('level3');
         map.addTilesetImage('Tilesheet','Tilesheet');
         mapBackground = map.createLayer('Background');
         mapRoads = map.createLayer('Roads');
