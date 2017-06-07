@@ -7,7 +7,7 @@ var winState = {
 		
 		var winLabel = game.add.text(80, 80, 'You Win!',{font: '50px Arial', fill: '#00FF00'});
 		
-		var startLabel = game.add.text(80, game.world.height-80, 'press the "W" key to play again', {font: '25px Arial', fill: '#ffffff'});
+		var startLabel = game.add.text(0, 0, 'press the "W" key to play again', {font: '25px Arial', fill: '#00FF00'});
 		
 		// Add "W" key 
 		var wkey = game.input.keyboard.addKey(Phaser.Keyboard.W);

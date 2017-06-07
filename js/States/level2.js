@@ -101,8 +101,9 @@ var level2State = {
         potholes.potCount=0; //Create a variable per pothole object.        
             
         //Pothole creation on level.
-        this.createPothole(200,700);
-        this.createPothole(620,300);
+        this.createPothole(255,1000);
+        this.createPothole(575,120);
+		this.createPothole(1570,775);
         
 		// add player image
 		player = game.add.sprite(80, 160, 'player');

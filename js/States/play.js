@@ -68,23 +68,9 @@ var playState = {
             'y' :[0, 700]
         };
         
-        //Prelim variable instantiation
-        //Make increment smaller for faster moving sprite and vice versa
-        //increment = 1/400;
-        //i = 0;
-        //timerStopped = true;
-        //timer1 = null;
-        
         //Creating bitmap
         bmd = this.add.bitmapData(game.width, game.height);
         bmd.addToWorld();
-        
-        //Loop to draw path for visualization
-        /*for(let j = 0; j < 1; j += increment) {
-            var posx = this.math.linearInterpolation(points.x, j);
-            var posy = this.math.linearInterpolation(points.y, j);
-            bmd.rect(posx, posy, 3, 3, 'rgba(245, 0, 0, 1)');
-        }*/
         
 		// add image background and buildings
         map=game.add.tilemap('level1');
@@ -159,8 +145,6 @@ var playState = {
 		// Add Keyboard movement/actions here:
 		keyboard = game.input.keyboard;
 
-// i used brute force make these rotate, will clean it up later
-
 		//Cement filler group
         filler = game.add.group();
 		fill1 = filler.create(825, 725,'fill');
@@ -175,8 +159,7 @@ var playState = {
         fill.anchor.setTo(0.5);
         fill.scale.setTo(0.2);
 		
-        // hud  here:
-        
+        // hud  here:        
         // NEXT SET OF LINES TO ADD IN THE FILLED BAR
         bar_fill = game.add.sprite(500, 100, 'bar_full');
 		bar_fill.anchor.setTo(1);
@@ -204,11 +187,10 @@ var playState = {
 
 
 	update: function() {		
-		//console.log('Update: playState');
+		console.log('Update: playState');
         
         //Car rotation
         //Saving car's position so that the angle may be calculated
-        
         px.push(car.x);
         py.push(car.y);
         
@@ -238,7 +220,6 @@ var playState = {
         count++;
         
         //Arrow stuff
-        
         //Finding closest pothole and pointing arrow at it
         var closestPothole = potholes.getClosestTo(player, null, this);
         
@@ -280,13 +261,6 @@ var playState = {
 			timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1); 
 			this.time = this.time - 20;
 		}
-
-        /*if(timerStopped){
-            timerStopped = false;
-            timer1 = game.time.create(true);
-            timer1.loop(.01, this.plot, this);
-            timer1.start();
-        }*/
 		
 		// Add collision:
 		game.physics.arcade.overlap(player, filler, this.collectFill, null, this);
@@ -362,6 +336,8 @@ var playState = {
         }
         
 	},
+	
+	
 	gameOver: function(){
 		
 		console.log('gameOver: function');
@@ -414,9 +390,7 @@ var playState = {
 		  music_alert.play();
 		  ticking.play();
         }
-		//sfx_alert.play();
-		//music_caution.stop();
-		//music_aler	t.play();
+
 		spotted = true;
 		if(ammo<=2) { 
 			ammo++;
@@ -426,7 +400,8 @@ var playState = {
 	},
 	
 	
-	render: function(){//used to debug~!!!!!~ 
+	//used to debug~!!!!!~
+	render: function(){ 
         //game.debug.bodyInfo(player,32,32);
         //game.debug.body(player);
         //game.debug.body(car);
@@ -435,25 +410,24 @@ var playState = {
 	
 	
     wasHit: function(){
-        console.log('was hit');
+        //console.log('was hit');
         if(percentScore != 1){
 			this.gameOver();
 		}
-		
-        //console.log('wasHit');
     },
 	
 	
     createPothole: function(x,y){
         var pothole = potholes.create(x,y,'potholeAnim');
         var potholeCount = 0;
-        //pothole.scale.setTo(0.2,0.2);
 		pothole.frame = 0;	
+		
 		// Condition for flipping the animation state back to original state.
 		if(potholeCount == 0){
 			pothole.frame = 0;
 		}
     },
+   
    
     killPothole: function(player,pothole){
         if(game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
@@ -462,27 +436,31 @@ var playState = {
             fix.play();
             game.camera.shake(0.01,300);
 			
+			// Pothole Animations when player hits spacebar.
 			if(potholes.potCount == 2){pothole.frame = 2;}
 			if(potholes.potCount == 4){pothole.frame = 1;}
 			if(potholes.potCount == 6){pothole.frame = 3;}
 			if(potholes.potCount == 8){pothole.frame = 4;}
-            if(potholes.potCount == 10){
+            
+			if(potholes.potCount == 10){
             	pothole_complete.play();
                 potholes.remove(pothole);
                 potholes.potCount = 0;
                 ammo--;
-                //this was updateScore function
+                
+				//this was updateScore function
 				percentScore = 1/numHoles;
                 var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 500, "Linear", true, 0, 0);
                 t1.start();
                 if(numHoles > 1){
                     numHoles--;
-                }
-                if(percentScore == 1){
+            }
+                
+				if(percentScore == 1){
                     //the function call was Winning function
                     t1.onComplete.add(function(){
+						//game.state.start('win');
                         spotted = false;
-                        //game.paused = true;
                         this.winning = game.add.text(400 , game.world.height/2, 'LEVEL COMPLETE!\nPress "R" to continue ',{font: '30px Helvitica', fill: '#ff0083'});
                         this.winning.fixedToCamera = true;
                         this.winning.anchor.setTo(.5);
