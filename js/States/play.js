@@ -20,6 +20,7 @@ var playerHole=false;
 var fill_angle = 0;
 var toggle = true;
 var spotted;
+var check;
 
 var playState = {
 	create: function () {
@@ -104,7 +105,7 @@ var playState = {
         this.createPothole(620,300);
         
 		// add player image
-		player = game.add.sprite(500, 500, 'player');
+		player = game.add.sprite(80, 160, 'player');
 		player.scale.setTo(.4,.4);
 		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
 		player.anchor.setTo(0.5, 0.5);
@@ -114,7 +115,7 @@ var playState = {
 		player.animations.add('walkUp',Phaser.Animation.generateFrameNames('player_',12,7,'',2),20,false);
         player.animations.add('walkRight',Phaser.Animation.generateFrameNames('playerSide_',6,1,'',2),20,false);
         player.animations.add('walkLeft',Phaser.Animation.generateFrameNames('playerSide_',7,12,'',2),20,false);
-        player.animations.play('walkDown');
+        player.animations.play('walkRight');
 		
         // player physics
 		game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -196,6 +197,9 @@ var playState = {
 		inv = game.add.sprite(0, 20, 'inventory');
 		inv.fixedToCamera = true;
 		inv.cameraOffset.setTo(10, 500);
+        
+        check=0;
+        
 	},
 
 
@@ -267,7 +271,7 @@ var playState = {
         fill1.angle ++;
         
         //time check for game over
-		if(this.time == 0){
+		if(this.time == 0&& check ==0){
 			this.gameOver();
 		}
 
@@ -295,7 +299,7 @@ var playState = {
 		player.body.velocity.y = 0;
 		
 
-		if(this.foot_bool == true){
+		if(this.foot_bool == true && this.dead==false){
 			if(footstep.isPlaying == false){
 				footstep.play();
 			}
@@ -316,7 +320,7 @@ var playState = {
 		}
 		
 		else if(keyboard.isDown(Phaser.Keyboard.W)){
-			
+			this.foot_bool=true;
 			player.body.velocity.y = -250;
 			player.animations.play('walkUp');
 			
@@ -348,21 +352,20 @@ var playState = {
 		
 		// Condition for player death.
         if(this.dead==true){
+                ticking.stop();
         	if(keyboard.isDown(Phaser.Keyboard.R)){
         		music_caution.stop();
         		music_alert.stop();
         		ambience.stop();
-        		ticking.stop();
         		game.state.start('play');
 			}
         }
+        
 	},
-	
-	
 	gameOver: function(){
 		
 		console.log('gameOver: function');
-		
+		check =1;
 		spotted = false;
 		
 		explode = game.add.sprite(player.x, player.y, 'explosion');
@@ -375,7 +378,7 @@ var playState = {
 		explosion.play();
 
 
-		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER!\nPress "r" to return to restart. ',{font: '30px Helvitica', fill: '#FFFFFF'});
+		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER!\nPress "R" to Restart. ',{font: '30px Helvitica', fill: '#ff0083'});
 		this.gameover.fixedToCamera = true;
 		this.gameover.anchor.setTo(.5);
 		this.gameover.cameraOffset.setTo(400, 300);
@@ -432,6 +435,7 @@ var playState = {
 	
 	
     wasHit: function(){
+        console.log('was hit');
         if(percentScore != 1){
 			this.gameOver();
 		}
@@ -450,8 +454,7 @@ var playState = {
 			pothole.frame = 0;
 		}
     },
-    
-	
+   
     killPothole: function(player,pothole){
         if(game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
             
@@ -468,52 +471,36 @@ var playState = {
                 potholes.remove(pothole);
                 potholes.potCount = 0;
                 ammo--;
-				updateScore();
+                //this was updateScore function
+				percentScore = 1/numHoles;
+                var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 500, "Linear", true, 0, 0);
+                t1.start();
+                if(numHoles > 1){
+                    numHoles--;
+                }
+                if(percentScore == 1){
+                    //the function call was Winning function
+                    t1.onComplete.add(function(){
+                        spotted = false;
+                        //game.paused = true;
+                        this.winning = game.add.text(400 , game.world.height/2, 'LEVEL COMPLETE!\nPress "R" to continue ',{font: '30px Helvitica', fill: '#ff0083'});
+                        this.winning.fixedToCamera = true;
+                        this.winning.anchor.setTo(.5);
+                        this.winning.cameraOffset.setTo(400, 300);
+                        ticking.stop();
+
+                        window.onkeydown = function(event) {
+                            if (event.keyCode ==  Phaser.Keyboard.R){
+                                game.paused = false;
+                                music_caution.stop();
+                                music_alert.stop();
+                                ambience.stop();
+                                ticking.stop();
+                                game.state.start('level2State');
+                            }
+                        }}, this)
+                }
             }
-        }
+        } 
     }
-}
-
-
-function updateScore(){
-
-        percentScore = 1/numHoles;
-      
-        var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 500, "Linear", true, 0, 0);
-      
-        t1.start();
-      
-        if(numHoles > 1){
-            numHoles--;
-        }
-		if(percentScore == 1){
-			t1.onComplete.add(Winning, this)
-			
-		}
-}
-
-
-function Winning() {
-		
-		console.log('Win: function');
-		
-		spotted = false;
-		
-		//game.paused = true;
-
-		this.winning = game.add.text(400 , game.world.height/2, 'LEVEL COMPLETE!\nPress "r" to return to menu ',{font: '30px Helvitica', fill: '#FFFFFF'});
-		this.winning.fixedToCamera = true;
-		this.winning.anchor.setTo(.5);
-		this.winning.cameraOffset.setTo(400, 300);
-		
-		window.onkeydown = function(event) {
-            if (event.keyCode ==  Phaser.Keyboard.R){
-                game.paused = false;
-				music_caution.stop();
-        		music_alert.stop();
-        		ambience.stop();
-        		ticking.stop();
-        		game.state.start('menu');
-            }
-        }
 }
