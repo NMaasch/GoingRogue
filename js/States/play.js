@@ -1,4 +1,4 @@
-// Instantiate playState
+	// Instantiate playState
 var car;
 var bmd;
 var px = [0];
@@ -19,6 +19,8 @@ var firstCollect;
 var playerHole=false;
 var fill_angle = 0;
 var toggle = true;
+var spotted;
+var check;
 
 var playState = {
 	create: function () {
@@ -26,15 +28,17 @@ var playState = {
         // Music and SFX here:
 		music_caution.play();
 		ambience.play();
-        //this.foot_time = 500;
-        this.foot_bool = false;
+        
+		// Variable declarations 
+		this.foot_bool = false;
 		this.dead = false;
-		this.spotted = false;
+		spotted = false;
         ammo = 0;
         firstCollect = false;
         potCount=0;
         numHoles = 2;
         percentScore = 1/numHoles;
+		
 		//TIME FOR LEVEL
 		this.time = 60000 / 2; 
 		
@@ -111,7 +115,7 @@ var playState = {
 		player.animations.add('walkUp',Phaser.Animation.generateFrameNames('player_',12,7,'',2),20,false);
         player.animations.add('walkRight',Phaser.Animation.generateFrameNames('playerSide_',6,1,'',2),20,false);
         player.animations.add('walkLeft',Phaser.Animation.generateFrameNames('playerSide_',7,12,'',2),20,false);
-        player.animations.play('walkDown');
+        player.animations.play('walkRight');
 		
         // player physics
 		game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -191,71 +195,14 @@ var playState = {
 		
 		// Filler Inventory
 		inv = game.add.sprite(0, 20, 'inventory');
-		//inv.animations.add('1', [1], false);
-		//inv.animations.add('2', [2], false);
-		//inv.scale.setTo(.8,.8)
-		//inv.anchor.setTo(.5);
 		inv.fixedToCamera = true;
 		inv.cameraOffset.setTo(10, 500);
+        
+        check=0;
+        
 	},
 
 
-	gameOver: function(){
-		explode = game.add.sprite(player.x, player.y, 'explosion');
-		explode.anchor.setTo(.5);
-		player.kill();
-		//explosion sprite and sound
-		
-		explode.animations.add('explode');
-		explode.animations.play('explode', 25, false);
-		explosion.play();
-
-
-		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER\nPress "R" ro Restart the Level',{font: '30px Arial', fill: '#ff009d'});
-		this.gameover.fixedToCamera = true;
-		this.gameover.anchor.setTo(.5);
-		this.gameover.cameraOffset.setTo(400, 300);
-		this.dead = true;
-	},
-
-	collectFill: function(player, fill){
-        if(firstCollect == false){
-            
-            //Adding in cop cars when cement is first collected
-            car2 = new Car(game, 'poCar', 0, 0, points2, 1000, false, 200);
-            car2.body.setSize(110,223,55,-66);
-            game.add.existing(car2);
-            
-            car3 = new Car(game, 'poCar', 0, 0, points3, 1000, false, 200);
-            car3.body.setSize(110,223,55,-66);
-            game.add.existing(car3);
-            
-		  box = game.add.sprite(20, 20, 'timerbox');
-		  box.scale.setTo(1.2,1.4);
-		  box.anchor.setTo(.5);
-		  box.fixedToCamera = true;
-		  box.cameraOffset.setTo(400, 40);
-		  box.scale.setTo(1.2,1);
-		  timer = game.add.text(20,20, '',{font: '32px Helvitica', fill: '#FFFFFF' });
-		  timer.anchor.setTo(.5);
-		  timer.fixedToCamera = true;
-		  timer.cameraOffset.setTo(400, 35);
-          firstCollect = true;
-          sfx_alert.play();
-		  music_caution.stop();
-		  music_alert.play();
-		  ticking.play();
-        }
-		//sfx_alert.play();
-		//music_caution.stop();
-		//music_alert.play();
-		this.spotted = true;
-		if(ammo<=2) { 
-			ammo++;
-			inv.frame = ammo;
-			fill.kill();
-		}
-	},
 	update: function() {		
 		//console.log('Update: playState');
         
@@ -324,20 +271,16 @@ var playState = {
         fill1.angle ++;
         
         //time check for game over
-		if(this.time == 0){
+		if(this.time == 0&& check ==0){
 			this.gameOver();
 		}
-        
-		// time:
-//		timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1);
-//		this.time = this.time - 20;
 
 		// once player picks up the fill timer starts ticking down;
-
-		if(this.spotted == true){
+		if(spotted == true){
 			timer.text = '' + Math.max( Math.round(this.time)/1000, 0.0 ).toFixed(1); 
 			this.time = this.time - 20;
-		}	
+		}
+
         /*if(timerStopped){
             timerStopped = false;
             timer1 = game.time.create(true);
@@ -356,7 +299,7 @@ var playState = {
 		player.body.velocity.y = 0;
 		
 
-		if(this.foot_bool == true){
+		if(this.foot_bool == true && this.dead==false){
 			if(footstep.isPlaying == false){
 				footstep.play();
 			}
@@ -377,7 +320,7 @@ var playState = {
 		}
 		
 		else if(keyboard.isDown(Phaser.Keyboard.W)){
-			
+			this.foot_bool=true;
 			player.body.velocity.y = -250;
 			player.animations.play('walkUp');
 			
@@ -397,7 +340,7 @@ var playState = {
 		// Condition for removing a pothole
 		// Specify in the "Instructions" that the player is to tap on spacebar.
 		playerHole = game.physics.arcade.overlap(player,potholes);
-        if(playerHole == true && ammo>0){
+        if(playerHole == true && ammo > 0){
         	spacebar.x=player.x-100;
         	spacebar.y=player.y-100;
             game.physics.arcade.overlap(player,potholes,this.killPothole);
@@ -406,68 +349,158 @@ var playState = {
         	potholes.potCount = 0;
         	spacebar.x=-300;
         }
-
+		
+		// Condition for player death.
         if(this.dead==true){
+                ticking.stop();
         	if(keyboard.isDown(Phaser.Keyboard.R)){
         		music_caution.stop();
         		music_alert.stop();
         		ambience.stop();
-        		ticking.stop();
         		game.state.start('play');
 			}
         }
+        
 	},
+	gameOver: function(){
+		
+		console.log('gameOver: function');
+		check =1;
+		spotted = false;
+		
+		explode = game.add.sprite(player.x, player.y, 'explosion');
+		explode.anchor.setTo(.5);
+		player.kill();
+		//explosion sprite and sound
+		
+		explode.animations.add('explode');
+		explode.animations.play('explode', 25, false);
+		explosion.play();
+
+
+		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER!\nPress "R" to Restart. ',{font: '30px Helvitica', fill: '#ff0083'});
+		this.gameover.fixedToCamera = true;
+		this.gameover.anchor.setTo(.5);
+		this.gameover.cameraOffset.setTo(400, 300);
+		this.dead = true;
+	},
+
+	
+	collectFill: function(player, fill){
+        if(firstCollect == false){
+            
+            //Adding in cop cars when cement is first collected
+            car2 = new Car(game, 'poCar', 0, 0, points2, 1000, false, 200);
+            car2.body.setSize(110,223,55,-66);
+            game.add.existing(car2);
+            
+            car3 = new Car(game, 'poCar', 0, 0, points3, 1000, false, 200);
+            car3.body.setSize(110,223,55,-66);
+            game.add.existing(car3);
+            
+		  box = game.add.sprite(20, 20, 'timerbox');
+		  box.scale.setTo(1.2,1.4);
+		  box.anchor.setTo(.5);
+		  box.fixedToCamera = true;
+		  box.cameraOffset.setTo(400, 40);
+		  box.scale.setTo(1.2,1);
+		  timer = game.add.text(20,20, '',{font: '32px Helvitica', fill: '#FFFFFF' });
+		  timer.anchor.setTo(.5);
+		  timer.fixedToCamera = true;
+		  timer.cameraOffset.setTo(400, 35);
+          firstCollect = true;
+          sfx_alert.play();
+		  music_caution.stop();
+		  music_alert.play();
+		  ticking.play();
+        }
+		//sfx_alert.play();
+		//music_caution.stop();
+		//music_aler	t.play();
+		spotted = true;
+		if(ammo<=2) { 
+			ammo++;
+			inv.frame = ammo;
+			fill.kill();
+		}
+	},
+	
+	
 	render: function(){//used to debug~!!!!!~ 
         //game.debug.bodyInfo(player,32,32);
         //game.debug.body(player);
         //game.debug.body(car);
         //potholes.forEach(this.game.debug.body, this.game.debug);
     },
-	Win: function() {
-		
-		console.log('Win: playState');
-		
-		// Function call to winState.
-		game.state.start('win');
-	},
+	
+	
     wasHit: function(){
-        this.gameOver();
+        console.log('was hit');
+        if(percentScore != 1){
+			this.gameOver();
+		}
+		
         //console.log('wasHit');
     },
+	
+	
     createPothole: function(x,y){
-        var pothole = potholes.create(x,y,'pothole');
-        var potholeCount=0;
-        pothole.scale.setTo(0.2,0.2);
-        //pothole.anchor.setTo(0.5);
-        //pothole.body.setSize(160, 160, 100, 100);
+        var pothole = potholes.create(x,y,'potholeAnim');
+        var potholeCount = 0;
+        //pothole.scale.setTo(0.2,0.2);
+		pothole.frame = 0;	
+		// Condition for flipping the animation state back to original state.
+		if(potholeCount == 0){
+			pothole.frame = 0;
+		}
     },
-    
+   
     killPothole: function(player,pothole){
         if(game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
-            potholes.potCount++;
+            
+			potholes.potCount++;
             fix.play();
             game.camera.shake(0.01,300);
-            if(potholes.potCount== 10){
+			
+			if(potholes.potCount == 2){pothole.frame = 2;}
+			if(potholes.potCount == 4){pothole.frame = 1;}
+			if(potholes.potCount == 6){pothole.frame = 3;}
+			if(potholes.potCount == 8){pothole.frame = 4;}
+            if(potholes.potCount == 10){
             	pothole_complete.play();
                 potholes.remove(pothole);
                 potholes.potCount = 0;
                 ammo--;
-                updateScore();
-            }
-        }
-    }
-}
+                //this was updateScore function
+				percentScore = 1/numHoles;
+                var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 500, "Linear", true, 0, 0);
+                t1.start();
+                if(numHoles > 1){
+                    numHoles--;
+                }
+                if(percentScore == 1){
+                    //the function call was Winning function
+                    t1.onComplete.add(function(){
+                        spotted = false;
+                        //game.paused = true;
+                        this.winning = game.add.text(400 , game.world.height/2, 'LEVEL COMPLETE!\nPress "R" to continue ',{font: '30px Helvitica', fill: '#ff0083'});
+                        this.winning.fixedToCamera = true;
+                        this.winning.anchor.setTo(.5);
+                        this.winning.cameraOffset.setTo(400, 300);
+                        ticking.stop();
 
-function updateScore(){
-        //console.log(barHeight);
-        percentScore = 1/numHoles;
-        //console.log(percentScore);
-      
-        var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 2000, "Linear", true, 0, 0);
-      
-        t1.start();
-      
-        if(numHoles > 1){
-            numHoles--;
-        }
+                        window.onkeydown = function(event) {
+                            if (event.keyCode ==  Phaser.Keyboard.R){
+                                game.paused = false;
+                                music_caution.stop();
+                                music_alert.stop();
+                                ambience.stop();
+                                ticking.stop();
+                                game.state.start('level2State');
+                            }
+                        }}, this)
+                }
+            }
+        } 
+    }
 }

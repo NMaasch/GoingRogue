@@ -10,6 +10,7 @@ game.state.add('instructionsPg2', instructionsPg2State);
 game.state.add('intro',introState);
 game.state.add('play', playState);
 game.state.add('level2State',level2State);
+game.state.add('level3State',level3State);
 game.state.add('win', winState);
 
 // Start game by calling boot
