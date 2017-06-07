@@ -36,9 +36,11 @@ var loadState = {
 		// Sounds for game
 		// MUSIC
 		game.load.path = 'assets/sounds/music/';
+		game.load.audio('gameover', ['gameover.mp3', 'gameover.ogg']);
 		game.load.audio('music1', ['sneak.mp3', 'sneak.ogg']);
 		game.load.audio('alert', ['alert.mp3', 'alert.ogg']);
 		game.load.audio('theme', ['theme.mp3', 'theme.ogg']);
+		game.load.audio('gameover', ['gameover.mp3', 'gameover.ogg']);
 		game.load.audio('alert-theme', ['alert-theme.mp3', 'alert-theme.ogg']);
 		game.load.audio('caution-theme',['caution-theme.mp3', 'caution-theme.ogg']);
 

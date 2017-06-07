@@ -357,6 +357,7 @@ var playState = {
         		music_caution.stop();
         		music_alert.stop();
         		ambience.stop();
+                music_gameover.stop();
         		game.state.start('play');
 			}
         }
@@ -370,11 +371,15 @@ var playState = {
 		
 		explode = game.add.sprite(player.x, player.y, 'explosion');
 		explode.anchor.setTo(.5);
+        explode.scale.setTo(3);
 		player.kill();
+        music_caution.stop();
+        music_alert.stop();
+        music_gameover.play();
 		//explosion sprite and sound
 		
 		explode.animations.add('explode');
-		explode.animations.play('explode', 25, false);
+		explode.animations.play('explode', 5, false);
 		explosion.play();
 
 
@@ -488,6 +493,9 @@ var playState = {
                         this.winning.anchor.setTo(.5);
                         this.winning.cameraOffset.setTo(400, 300);
                         ticking.stop();
+                        sfx_complete.play();
+                        music_caution.stop();
+                        music_alert.stop();
 
                         window.onkeydown = function(event) {
                             if (event.keyCode ==  Phaser.Keyboard.R){
