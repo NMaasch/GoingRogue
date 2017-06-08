@@ -1,4 +1,3 @@
-	// Instantiate playState
 var car;
 var bmd;
 var px = [0];
@@ -36,11 +35,11 @@ var level3State = {
         ammo = 0;
         firstCollect = false;
         potCount=0;
-        numHoles = 2;
+        numHoles = 5;
         percentScore = 1/numHoles;
 		
 		//TIME FOR LEVEL
-		this.time = 60000 / 2; 
+		this.time = 60000; 
 		
 		console.log('Create: playState');
 		
@@ -68,23 +67,9 @@ var level3State = {
             'y' :[0, 700]
         };
         
-        //Prelim variable instantiation
-        //Make increment smaller for faster moving sprite and vice versa
-        //increment = 1/400;
-        //i = 0;
-        //timerStopped = true;
-        //timer1 = null;
-        
         //Creating bitmap
         bmd = this.add.bitmapData(game.width, game.height);
         bmd.addToWorld();
-        
-        //Loop to draw path for visualization
-        /*for(let j = 0; j < 1; j += increment) {
-            var posx = this.math.linearInterpolation(points.x, j);
-            var posy = this.math.linearInterpolation(points.y, j);
-            bmd.rect(posx, posy, 3, 3, 'rgba(245, 0, 0, 1)');
-        }*/
         
 		// add image background and buildings
         map=game.add.tilemap('level3');
@@ -101,11 +86,15 @@ var level3State = {
         potholes.potCount=0; //Create a variable per pothole object.        
             
         //Pothole creation on level.
-        this.createPothole(200,700);
-        this.createPothole(620,300);
+        this.createPothole(1200, 225); 
+        this.createPothole(860, 225); 
+        this.createPothole(860, 1000); 
+        this.createPothole(200, 1020); 
+        this.createPothole(358, 1210);        
+
         
 		// add player image
-		player = game.add.sprite(80, 160, 'player');
+		player = game.add.sprite(640, 736, 'player');
 		player.scale.setTo(.4,.4);
 		game.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT, 0.1, 0.1);
 		player.anchor.setTo(0.5, 0.5);
@@ -159,24 +148,40 @@ var level3State = {
 		// Add Keyboard movement/actions here:
 		keyboard = game.input.keyboard;
 
-// i used brute force make these rotate, will clean it up later
-
 		//Cement filler group
         filler = game.add.group();
-		fill1 = filler.create(825, 725,'fill');
+		fill1 = filler.create(64, 1280,'fill');
 		game.physics.enable(fill1, Phaser.Physics.ARCADE);
 		fill1.body.immovable = true;
         fill1.anchor.setTo(0.5);
         fill1.scale.setTo(0.2);
         
-        fill = filler.create(925, 775,'fill');
+        fill = filler.create(128, 1280,'fill');
 		game.physics.enable(fill, Phaser.Physics.ARCADE);
 		fill.body.immovable = true;
         fill.anchor.setTo(0.5);
         fill.scale.setTo(0.2);
+        
+        fill2 = filler.create(192, 1280,'fill');
+		game.physics.enable(fill2, Phaser.Physics.ARCADE);
+		fill2.body.immovable = true;
+        fill2.anchor.setTo(0.5);
+        fill2.scale.setTo(0.2);
+        
+        fill3 = filler.create(1376, 96,'fill');
+		game.physics.enable(fill3, Phaser.Physics.ARCADE);
+		fill3.body.immovable = true;
+        fill3.anchor.setTo(0.5);
+        fill3.scale.setTo(0.2);
+        
+        fill4 = filler.create(1442, 96,'fill');
+		game.physics.enable(fill4, Phaser.Physics.ARCADE);
+		fill4.body.immovable = true;
+        fill4.anchor.setTo(0.5);
+        fill4.scale.setTo(0.2);
+        
 		
         // hud  here:
-        
         // NEXT SET OF LINES TO ADD IN THE FILLED BAR
         bar_fill = game.add.sprite(500, 100, 'bar_full');
 		bar_fill.anchor.setTo(1);
@@ -208,7 +213,6 @@ var level3State = {
         
         //Car rotation
         //Saving car's position so that the angle may be calculated
-        
         px.push(car.x);
         py.push(car.y);
         
@@ -238,7 +242,6 @@ var level3State = {
         count++;
         
         //Arrow stuff
-        
         //Finding closest pothole and pointing arrow at it
         var closestPothole = potholes.getClosestTo(player, null, this);
         
@@ -269,6 +272,9 @@ var level3State = {
         //rotation for fill
         fill.angle ++;
         fill1.angle ++;
+        fill2.angle ++;
+        fill3.angle ++;
+        fill4.angle ++;
         
         //time check for game over
 		if(this.time == 0&& check ==0){
@@ -281,12 +287,6 @@ var level3State = {
 			this.time = this.time - 20;
 		}
 
-        /*if(timerStopped){
-            timerStopped = false;
-            timer1 = game.time.create(true);
-            timer1.loop(.01, this.plot, this);
-            timer1.start();
-        }*/
 		
 		// Add collision:
 		game.physics.arcade.overlap(player, filler, this.collectFill, null, this);
@@ -357,9 +357,32 @@ var level3State = {
         		music_caution.stop();
         		music_alert.stop();
         		ambience.stop();
-        		game.state.start('play');
+                music_gameover.stop();
+        		game.state.start('level3State');
 			}
         }
+        if(percentScore == 1){
+             spotted = false;
+                //game.paused = true;
+                this.winning = game.add.text(400 , game.world.height/2, '\t\t\t\tLEVEL COMPLETE!\n\t\tPress "R" to Continue ',{font: '70px Verdana', fill: '#ff0083'});
+                this.winning.fixedToCamera = true;
+                this.winning.anchor.setTo(.5);
+                this.winning.cameraOffset.setTo(400, 300);
+                ticking.stop();
+                if(check==0){sfx_clapping.play();sfx_tada.play();}
+                check=1;
+                music_caution.stop();
+                music_alert.stop();
+                if (game.input.keyboard.isDown(Phaser.Keyboard.R)){
+                    game.paused = false;
+                    this.dead=false;
+                    music_caution.stop();
+                    music_alert.stop();
+                    ambience.stop();
+                    ticking.stop();
+                    game.state.start('creditState');
+                }
+         }
         
 	},
 	gameOver: function(){
@@ -370,15 +393,19 @@ var level3State = {
 		
 		explode = game.add.sprite(player.x, player.y, 'explosion');
 		explode.anchor.setTo(.5);
+        explode.scale.setTo(3);
 		player.kill();
+        music_caution.stop();
+        music_alert.stop();
+        music_gameover.play();
 		//explosion sprite and sound
 		
 		explode.animations.add('explode');
-		explode.animations.play('explode', 25, false);
+		explode.animations.play('explode', 5, false);
 		explosion.play();
 
 
-		this.gameover = game.add.text(400 , game.world.height/2, 'GAMEOVER!\nPress "R" to Restart. ',{font: '30px Helvitica', fill: '#ff0083'});
+		this.gameover = game.add.text(400 , game.world.height/2, '\t\t\t\t\t\t\tGAMEOVER!\n\t\tPress "R" to Restart. ',{font: '80px Verdana', fill: '#ff0083'});
 		this.gameover.fixedToCamera = true;
 		this.gameover.anchor.setTo(.5);
 		this.gameover.cameraOffset.setTo(400, 300);
@@ -414,19 +441,16 @@ var level3State = {
 		  music_alert.play();
 		  ticking.play();
         }
-		//sfx_alert.play();
-		//music_caution.stop();
-		//music_aler	t.play();
 		spotted = true;
-		if(ammo<=2) { 
+		if(ammo<2) { 
 			ammo++;
 			inv.frame = ammo;
 			fill.kill();
 		}
 	},
 	
-	
-	render: function(){//used to debug~!!!!!~ 
+	//used to debug~!!!!!
+	render: function(){ 
         //game.debug.bodyInfo(player,32,32);
         //game.debug.body(player);
         //game.debug.body(car);
@@ -435,7 +459,7 @@ var level3State = {
 	
 	
     wasHit: function(){
-        console.log('was hit');
+        //console.log('was hit');
         if(percentScore != 1){
 			this.gameOver();
 		}
@@ -447,7 +471,6 @@ var level3State = {
     createPothole: function(x,y){
         var pothole = potholes.create(x,y,'potholeAnim');
         var potholeCount = 0;
-        //pothole.scale.setTo(0.2,0.2);
 		pothole.frame = 0;	
 		// Condition for flipping the animation state back to original state.
 		if(potholeCount == 0){
@@ -461,7 +484,7 @@ var level3State = {
 			potholes.potCount++;
             fix.play();
             game.camera.shake(0.01,300);
-			
+			//Pothole Animations when player hits spacebar
 			if(potholes.potCount == 2){pothole.frame = 2;}
 			if(potholes.potCount == 4){pothole.frame = 1;}
 			if(potholes.potCount == 6){pothole.frame = 3;}
@@ -477,28 +500,6 @@ var level3State = {
                 t1.start();
                 if(numHoles > 1){
                     numHoles--;
-                }
-                if(percentScore == 1){
-                    //the function call was Winning function
-                    t1.onComplete.add(function(){
-                        spotted = false;
-                        //game.paused = true;
-                        this.winning = game.add.text(400 , game.world.height/2, 'LEVEL COMPLETE!\nPress "R" to continue ',{font: '30px Helvitica', fill: '#ff0083'});
-                        this.winning.fixedToCamera = true;
-                        this.winning.anchor.setTo(.5);
-                        this.winning.cameraOffset.setTo(400, 300);
-                        ticking.stop();
-
-                        window.onkeydown = function(event) {
-                            if (event.keyCode ==  Phaser.Keyboard.R){
-                                game.paused = false;
-                                music_caution.stop();
-                                music_alert.stop();
-                                ambience.stop();
-                                ticking.stop();
-                                game.state.start('level2State');
-                            }
-                        }}, this)
                 }
             }
         } 

@@ -11,16 +11,21 @@ var menuState = {
 
 	create: function () {
 
+
 		music_caution = game.add.audio('caution-theme',.5 , true);
 		music_alert = game.add.audio('alert-theme', .5, true);
 		sfx_alert = game.add.audio('alert', .6, false);
 		footstep =game.add.audio('footsteps', .2, true);
 		ambience = game.add.audio('ambience', .4, true);
-		ticking = game.add.audio('tick', .8, false);
+		ticking = game.add.audio('tick', .8, true);
 		fix = game.add.audio('fix', .9, false);
 		explosion = game.add.audio('explosion', .6, false);
 		pothole_complete = game.add.audio('pothole_complete', 1, false);
-        
+		music_gameover = game.add.audio('gameover', .8, false);
+        sfx_complete = game.add.audio('complete', .9, false);
+        sfx_clapping=game.add.audio('clapping',1,false);
+        sfx_tada=game.add.audio('tada',1,false);
+
 		button = game.add.audio('button', .8, false);
 		
 		//console log, setting bounds of game, setting camera
@@ -52,7 +57,7 @@ var menuState = {
 	 startGame: function() {
 	 	button.play();
 	 	theme.destroy();
-     	this.state.start('play');
+     	this.state.start('intro');
 	},
 
 	 goToInstructions: function() {
