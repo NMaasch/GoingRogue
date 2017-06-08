@@ -9,8 +9,11 @@ game.state.add('instructions', instructionsState);
 game.state.add('instructionsPg2', instructionsPg2State);
 game.state.add('intro',introState);
 game.state.add('play', playState);
+game.state.add('cutscene1State',cutscene1State);
 game.state.add('level2State',level2State);
+game.state.add('cutscene2State',cutscene2State);
 game.state.add('level3State',level3State);
+game.state.add('creditState',creditState);
 game.state.add('win', winState);
 
 // Start game by calling boot

@@ -27,7 +27,7 @@ var instructionsPg2State = {
 	 startGame: function() {
 	 	theme.destroy();
 	 	button.play();
-     	this.state.start('play');
+     	this.state.start('intro');
 	},
 
 	 goToInstructions: function() {

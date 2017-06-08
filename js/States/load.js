@@ -15,6 +15,7 @@ var loadState = {
 		game.load.atlas('player','img/playerAtlas.png','img/player.json');
         game.load.tilemap('level1','img/level1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.tilemap('level2','img/level2.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('level3','img/level3.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Tilesheet','img/Tilesheet.png');
         game.load.image('pothole','img/pothole.png');
         game.load.image('car','img/car.png');
@@ -55,6 +56,8 @@ var loadState = {
 		game.load.audio('complete', ['level_complete.mp3', 'level_complete.ogg']);
 		game.load.audio('fix', ['pothole.mp3', 'pothole.ogg']);
 		game.load.audio('pothole_complete', ['pothole_jingle.mp3', 'pothole_jingle.ogg']);
+        game.load.audio('clapping',['clapping.mp3','clapping.ogg']);
+        game.load.audio('tada',['tada.mp3','tada.ogg']);
 
 		
 	},
