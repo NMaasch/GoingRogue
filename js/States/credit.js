@@ -74,6 +74,7 @@ var creditState ={
     update: function(){
         if(keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
             music_symphony.stop();
+            theme.play();
             this.state.start('menu');
         }
     }
