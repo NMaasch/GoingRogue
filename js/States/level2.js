@@ -9,9 +9,12 @@ var px3 = [0];
 var py3 = [0];
 var px4 = [0];
 var py4 = [0];
+var px5 = [0];
+var py5 = [0];
 var count = 1;
 var count2 = 1;
 var percentScore;
+var p;
 var numHoles;
 var potCount;
 var ammo;
@@ -37,7 +40,20 @@ var level2State = {
         firstCollect = false;
         potCount=0;
         numHoles = 3;
+        count = 1;
+        count2 = 1;
+        px = [0];
+        py = [0];
+        px2 = [0];
+        py2 = [0];
+        px3 = [0];
+        py3 = [0];
+        px4 = [0];
+        py4 = [0];
+        px5 = [0];
+        py5 = [0];
         percentScore = 1/numHoles;
+        p = 0;
 		
 		//TIME FOR LEVEL
 		this.time = 60000; 
@@ -53,19 +69,47 @@ var level2State = {
         //Plot points for the moving sprite(car). The same index in x and y 
         //array correspond to one point (x[1] = 600, y[1] = 600) is 600, 600 
         //on coordinate plane
+        
+        //Ped car 1
         points = {
-            'x' : [0, 800],
-            'y' : [479, 479]
+            'x' : [0, 640, 640],
+            'y' : [577, 577, 0]
         };
         
+        //Ped car 2
+        points5 = {
+            'x' : [960, 960, 0],
+            'y' : [0, 896, 896]
+        };
+        
+        //Ped car 3
+        points6 = {
+            'x' : [1920, 1664, 1664, 1920],
+            'y' : [896, 896, 575, 575]
+        };
+        
+        //Ped car 4
+        points7 = {
+            'x' : [1664, 1664, 1920],
+            'y' : [1696, 1216, 1216]
+        };
+        
+        //Cop car 1
         points2 = {
-            'x' :[255, 255],
-            'y' :[0, 1000]
+            'x' :[320, 320],
+            'y' :[0, 1472]
         };
         
+        //Cop car 2
         points3 = {
-            'x' :[672, 672],
-            'y' :[0, 700]
+            'x' :[1280, 1280],
+            'y' :[0, 1472]
+        };
+        
+        //Cop car 3
+        points4 = {
+            'x' :[1600, 1600],
+            'y' :[0, 1472]
         };
         
         //Creating bitmap
@@ -111,9 +155,21 @@ var level2State = {
 		player.body.collideWorldBounds = true;
         
         //Adding car
-        car = new Car(game, 'car', 900, 500, points, 1200, true, 100);
-        car.body.setSize(70,70,27,25);
-        game.add.existing(car);
+        car1 = new Car(game, 'car', 900, 500, points, 0, false, 200, false);
+        car1.body.setSize(70,70,27,25);
+        game.add.existing(car1);
+        
+        car2 = new Car(game, 'car', 900, 500, points5, 0, true, 300, false);
+        car2.body.setSize(70,70,27,25);
+        game.add.existing(car2);
+        
+        car3 = new Car(game, 'car', 900, 500, points6, 1920, true, 150, true);
+        car3.body.setSize(70,70,27,25);
+        game.add.existing(car3);
+        
+        car4 = new Car(game, 'car', 900, 500, points7, 1920, true, 150, true);
+        car4.body.setSize(70,70,27,25);
+        game.add.existing(car4);
         //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
         //tween.onComplete.addOnce(this.tween2, this);
         
@@ -199,28 +255,57 @@ var level2State = {
         
         //Car rotation
         //Saving car's position so that the angle may be calculated
-        px.push(car.x);
-        py.push(car.y);
+        
+        px.push(car1.x);
+        py.push(car1.y);
+        
+        px3.push(car2.x);
+        py3.push(car2.y);
+        
+        px4.push(car3.x);
+        py4.push(car3.y);
+        
+        px5.push(car4.x);
+        py5.push(car4.y);
         
         angle = game.math.angleBetween(px[count-1], py[count-1], px[count], py[count]);
-        car.rotation = angle;
+        
+        angle3 = game.math.angleBetween(px3[count-1], py3[count-1], px3[count], py3[count]);
+        
+        angle4 = game.math.angleBetween(px4[count-1], py4[count-1], px4[count], py4[count]);
+        
+        angle5 = game.math.angleBetween(px5[count-1], py5[count-1], px5[count], py5[count]);
+        
+        car1.rotation = angle;
+        console.log(count);
+        console.log(count2);
+        
+        car2.rotation = angle3;
+        
+        car3.rotation = angle4;
+        
+        car4.rotation = angle5;
+        
+        game.physics.arcade.overlap(player,car1,this.wasHit,null,this);
+        game.physics.arcade.overlap(player,car2,this.wasHit,null,this);
+        game.physics.arcade.overlap(player,car3,this.wasHit,null,this);
+        game.physics.arcade.overlap(player,car4,this.wasHit,null,this);
         
         //Rotating cop car along its path
         if(numHoles > 0 && firstCollect){
-            px2.push(car2.x);
-            py2.push(car2.y);
+            px2.push(cop1.x);
+            py2.push(cop1.y);
         
             angle2 = game.math.angleBetween(px2[count2-1], py2[count2-1], px2[count2], py2[count2]);
-            car2.rotation = angle2;
-        
-            px3.push(car3.x);
-            py3.push(car3.y);
-        
-            angle3 = game.math.angleBetween(px3[count2-1], py3[count2-1], px3[count2], py3[count2]);
-            car3.rotation = angle3;
+            cop1.rotation = angle2;
             
-            game.physics.arcade.overlap(player,car2,this.wasHit,null,this);
-            game.physics.arcade.overlap(player,car3,this.wasHit,null,this);
+            cop2.rotation = angle2;
+            
+            cop3.rotation = angle2;
+            
+            game.physics.arcade.overlap(player,cop1,this.wasHit,null,this);
+            game.physics.arcade.overlap(player,cop2,this.wasHit,null,this);
+            game.physics.arcade.overlap(player,cop3,this.wasHit,null,this);
             
             count2++;
         }
@@ -275,8 +360,6 @@ var level2State = {
 		// Add collision:
 		game.physics.arcade.overlap(player, filler, this.collectFill, null, this);
 		game.physics.arcade.collide( player, mapBuildings);
-        game.physics.arcade.overlap(player,car,this.wasHit,null,this);
-
 		
 		// Add conditions for movement/actions here:
 		player.body.velocity.x = 0;
@@ -345,8 +428,8 @@ var level2State = {
         		game.state.start('level2State');
 			}
         }
-        if(percentScore == 1){
-             spotted = false;
+        if(p == 1){
+            spotted = false;
                 //game.paused = true;
                 this.winning = game.add.text(400 , game.world.height/2, '\t\t\t\tLEVEL COMPLETE!\n\t\tPress "R" to Continue ',{font: '70px Verdana', fill: '#ff0083'});
                 this.winning.fixedToCamera = true;
@@ -401,13 +484,17 @@ var level2State = {
         if(firstCollect == false){
             
             //Adding in cop cars when cement is first collected
-            car2 = new Car(game, 'poCar', 0, 0, points2, 1000, false, 200);
-            car2.body.setSize(110,223,55,-66);
-            game.add.existing(car2);
+            cop1 = new Car(game, 'poCar', 0, 0, points2, 1564, false, 200, true);
+            cop1.body.setSize(110,223,55,-66);
+            game.add.existing(cop1);
             
-            car3 = new Car(game, 'poCar', 0, 0, points3, 1000, false, 200);
-            car3.body.setSize(110,223,55,-66);
-            game.add.existing(car3);
+            cop2 = new Car(game, 'poCar', 0, 0, points3, 1564, false, 200, true);
+            cop2.body.setSize(110,223,55,-66);
+            game.add.existing(cop2);
+            
+            cop3 = new Car(game, 'poCar', 0, 0, points4, 1564, false, 200, true);
+            cop3.body.setSize(110,223,55,-66);
+            game.add.existing(cop3);
             
 		  box = game.add.sprite(20, 20, 'timerbox');
 		  box.scale.setTo(1.2,1.4);
@@ -479,12 +566,9 @@ var level2State = {
                 potholes.potCount = 0;
                 ammo--;
                 //this was updateScore function
-				percentScore = 1/numHoles;
-                var t1 = game.add.tween(bar_fill.scale).to({y: percentScore}, 500, "Linear", true, 0, 0);
+				p += percentScore;
+                var t1 = game.add.tween(bar_fill.scale).to({y: p}, 500, "Linear", true, 0, 0);
                 t1.start();
-                if(numHoles > 1){
-                    numHoles--;
-                }
             }
         } 
     }

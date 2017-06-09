@@ -1,13 +1,13 @@
 // Car Prefab for the police and citizen cars. 
 // game = game object, key = the name of the car object, frame = which animation frames (If any), scale = size, rotation = the starting rotation of the car, police = true or false for headlights to beam. 
-var count = 1;
+//var count = 1;
 var pos;
 //var temp1 = 0;
 //var temp2 = 0;
-var px = [0];
-var py = [0];
+//var px = [0];
+//var py = [0];
 
-function Car(game, key, x, y, p, termPoint, xOrY, speed){
+function Car(game, key, x, y, p, termPoint, xOrY, speed, toF){
 	
 	// Call to phaser.sprite(game, x, y, key, frame), new sprite
 	Phaser.Sprite.call(this, game, x, y, key);
@@ -26,6 +26,7 @@ function Car(game, key, x, y, p, termPoint, xOrY, speed){
     this.timer1 = null;
     this.tp = termPoint;
     this.xOrY = xOrY;
+    this.toF = toF;
     //this.px = [0];
     //this.py = [0];
 }
@@ -91,11 +92,20 @@ Car.prototype.plot = function(){
         pos = posy;
     }
     
-    if(pos > this.tp){
+    if(this.toF){
+        if(pos > this.tp){
+            this.timer1.stop();
+            this.timer1.destroy();
+            this.i = 0;
+            this.timerStopped = true;
+        }
+    }else{
+        if(pos < this.tp){
         this.timer1.stop();
         this.timer1.destroy();
         this.i = 0;
         this.timerStopped = true;
+    }
     }
         
     //count++;

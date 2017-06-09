@@ -109,7 +109,7 @@ var playState = {
 		player.body.collideWorldBounds = true;
         
         //Adding car
-        car = new Car(game, 'car', 900, 500, points, 1200, true, 100);
+        car = new Car(game, 'car', 900, 500, points, 1200, true, 100, true);
         car.body.setSize(70,70,27,25);
         game.add.existing(car);
         //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
@@ -196,6 +196,7 @@ var playState = {
         
         angle = game.math.angleBetween(px[count-1], py[count-1], px[count], py[count]);
         car.rotation = angle;
+        console.log(angle);
         
         //Rotating cop car along its path
         if(numHoles > 0 && firstCollect){
@@ -392,11 +393,11 @@ var playState = {
         if(firstCollect == false){
             
             //Adding in cop cars when cement is first collected
-            car2 = new Car(game, 'poCar', 0, 0, points2, 1000, false, 200);
+            car2 = new Car(game, 'poCar', 0, 0, points2, 1000, false, 200, true);
             car2.body.setSize(110,223,55,-66);
             game.add.existing(car2);
             
-            car3 = new Car(game, 'poCar', 0, 0, points3, 1000, false, 200);
+            car3 = new Car(game, 'poCar', 0, 0, points3, 1000, false, 200, true);
             car3.body.setSize(110,223,55,-66);
             game.add.existing(car3);
             
