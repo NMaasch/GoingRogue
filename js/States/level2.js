@@ -455,28 +455,29 @@ var level2State = {
 	gameOver: function(){
 		
 		console.log('gameOver: function');
-		check =1;
+		
 		spotted = false;
-		
-		explode = game.add.sprite(player.x, player.y, 'explosion');
-		explode.anchor.setTo(.5);
-        explode.scale.setTo(3);
-		player.kill();
-        music_caution.stop();
-        music_alert.stop();
-        music_gameover.play();
-		//explosion sprite and sound
-		
-		explode.animations.add('explode');
-		explode.animations.play('explode', 5, false);
-		explosion.play();
+		if(check!=1){
+            explode = game.add.sprite(player.x, player.y, 'explosion');
+            explode.anchor.setTo(.5);
+            explode.scale.setTo(3);
+            player.kill();
+            music_caution.stop();
+            music_alert.stop();
+            music_gameover.play();
+            //explosion sprite and sound
+
+            explode.animations.add('explode');
+            explode.animations.play('explode', 5, false);
+            explosion.play();
 
 
-		this.gameover = game.add.text(400 , game.world.height/2, '\t\t\t\t\t\t\tGAMEOVER!\n\t\tPress "R" to Restart. ',{font: '80px Verdana', fill: '#ff0083'});
-		this.gameover.fixedToCamera = true;
-		this.gameover.anchor.setTo(.5);
-		this.gameover.cameraOffset.setTo(400, 300);
-		this.dead = true;
+            this.gameover = game.add.text(400 , game.world.height/2, '\t\t\t\t\t\t\tGAMEOVER!\n\t\tPress "R" to Restart. ',{font: '80px Verdana', fill: '#ff0083'});
+            this.gameover.fixedToCamera = true;
+            this.gameover.anchor.setTo(.5);
+            this.gameover.cameraOffset.setTo(400, 300);
+            this.dead = true;
+        }
 	},
 
 	
