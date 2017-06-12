@@ -1,4 +1,7 @@
-	// Instantiate playState
+/*
+Level 2 Design for GoingRogue.
+*/
+
 var car;
 var bmd;
 var px = [0];
@@ -170,8 +173,6 @@ var level2State = {
         car4 = new Car(game, 'car', 900, 500, points7, 1920, true, 150, true);
         car4.body.setSize(70,70,27,25);
         game.add.existing(car4);
-        //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
-        //tween.onComplete.addOnce(this.tween2, this);
         
         //Arrows for pointing the player towards cement and potholes
         arrow = game.add.sprite(0, 0, 'arrow');
@@ -452,6 +453,8 @@ var level2State = {
          }
         
 	},
+	
+	
 	gameOver: function(){
 		
 		console.log('gameOver: function');

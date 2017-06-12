@@ -1,4 +1,7 @@
-	// Instantiate playState
+/*
+Level 1 Design for GoingRogue.
+*/
+
 var car;
 var bmd;
 var px = [0];
@@ -454,12 +457,14 @@ var playState = {
 		}
     },
    
+   
     killPothole: function(player,pothole){
         if(game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
             
 			potholes.potCount++;
             fix.play();
             game.camera.shake(0.01,300);
+			
 			//Pothole Animations when player hits spacebar
 			if(potholes.potCount == 2){pothole.frame = 2;}
 			if(potholes.potCount == 4){pothole.frame = 1;}
@@ -477,30 +482,6 @@ var playState = {
                 if(numHoles > 1){
                     numHoles--;
                 }
-                //if(percentScore == 1){
-                    //the function call was Winning function
-                   // t1.onComplete.add(function(){
-                      // spotted = false;
-                        //game.paused = true;
-                     //   this.winning = game.add.text(400 , game.world.height/2, '\t\t\t\tLEVEL COMPLETE!\n\t\tPress "R" to Continue ',{font: '70px Verdana', fill: '#ff0083'});
-                      //  this.winning.fixedToCamera = true;
-                       // this.winning.anchor.setTo(.5);
-                      //  this.winning.cameraOffset.setTo(400, 300);
-                       // ticking.stop();
-                      //  sfx_complete.play();
-                      //  music_caution.stop();
-                      //  music_alert.stop();
-                      //  if (game.input.keyboard.isDown(Phaser.Keyboard.R)){
-                         //       game.paused = false;
-                       //         this.dead=false;
-                         //       music_caution.stop();
-                           //     music_alert.stop();
-                        //        ambience.stop();
-                           //     ticking.stop();
-                           //     game.state.start('level2State');
-                         //   }
-                      //  }, this)
-                //}
             }
         } 
     }

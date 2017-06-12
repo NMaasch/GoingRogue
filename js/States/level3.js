@@ -1,3 +1,7 @@
+/*
+Level 3 design for Going Rogue.
+*/
+
 var car;
 var bmd;
 var px = [0];
@@ -211,8 +215,6 @@ var level3State = {
         car8 = new Car(game, 'car', 900, 500, points8, 1800, true, 180, true);
         car8.body.setSize(70,70,27,25);
         game.add.existing(car8);
-        //tween = game.add.tween(car).to({x: [600, 900]}, 1000, "Linear", true, -1, false);
-        //tween.onComplete.addOnce(this.tween2, this);
         
         //Arrows for pointing the player towards cement and potholes
         arrow = game.add.sprite(0, 0, 'arrow');
@@ -428,15 +430,12 @@ var level3State = {
 		player.body.velocity.x = 0;
 		player.body.velocity.y = 0;
 		
-
 		if(this.foot_bool == true && this.dead==false){
 			if(footstep.isPlaying == false){
 				footstep.play();
 			}
 		} else footstep.stop();
 	
-
-
         //player movement/animations
 		if(keyboard.isDown(Phaser.Keyboard.A)){
 			this.foot_bool = true;
@@ -515,6 +514,10 @@ var level3State = {
          }
         
 	},
+	
+	
+	// gameOver function is called if wasHit() is true.
+	// This destroys the player and allows replay of the current level.
 	gameOver: function(){
 		
 		console.log('gameOver: function');
@@ -544,6 +547,9 @@ var level3State = {
 	},
 
 	
+	// Conditional function for when a player collects resource (Cement).
+	// Activates the cop cars and triggers the timer.
+	// Adds resource to the inventory.
 	collectFill: function(player, fill){
         if(firstCollect == false){
             
@@ -585,6 +591,7 @@ var level3State = {
 		}
 	},
 	
+	
 	//used to debug~!!!!!
 	render: function(){ 
         //game.debug.bodyInfo(player,32,32);
@@ -602,8 +609,10 @@ var level3State = {
 		
         //console.log('wasHit');
     },
+
 	
-	
+	// Pothole created at coordinates (X,Y) with implicit variable pothholeCount.
+	// If called it creates an object in a group.
     createPothole: function(x,y){
         var pothole = potholes.create(x,y,'potholeAnim');
         var potholeCount = 0;
@@ -614,12 +623,17 @@ var level3State = {
 		}
     },
    
+
+	// Destroys pothole when called.
+	// Hosts conditional logic for gameplay loop with animations.
+	// Integrated updateScore() function into killPothole().
     killPothole: function(player,pothole){
         if(game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
             
 			potholes.potCount++;
             fix.play();
             game.camera.shake(0.01,300);
+			
 			//Pothole Animations when player hits spacebar
 			if(potholes.potCount == 2){pothole.frame = 2;}
 			if(potholes.potCount == 4){pothole.frame = 1;}
